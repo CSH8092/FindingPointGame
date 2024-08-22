@@ -10,6 +10,7 @@ public class CameraCom : MonoBehaviour
     // Components
     [Header("Target Object")]
     public Transform object_target;
+    public PinController pinController;
     GameObject obejct_pivot = null;
 
     Camera camera_this;
@@ -30,6 +31,10 @@ public class CameraCom : MonoBehaviour
     float rotateAccele = 0.015f;
     [SerializeField]
     float rotateAcceleLerp = 10f;
+    [SerializeField]
+    float maxZoomOut = 10;
+    [SerializeField]
+    float maxZoomIn = 2;
 
     float mouse_scrollwheel;
     float mouse_horizontal;
@@ -81,12 +86,12 @@ public class CameraCom : MonoBehaviour
         // Set Cam & Object Transform
         ObjectRotate();
         CameraZoom();
+        CameraPan(); // todo : 나중에 Objct Pan으로 바꾸기
 
 #if false
         // 해당 게임에는 맞지 않는 Control 방식이라 판단 -> 주석 처리
         CameraRotate();
         CameraPerfectPan();
-        CameraPan();
 #endif
     }
 
@@ -116,6 +121,8 @@ public class CameraCom : MonoBehaviour
 
             isRotate = true;
             rotateStartPoint = Input.mousePosition;
+
+            pinController.ShowHidePinPoints(false);
         }
         else if (Input.GetMouseButton(1))
         {
@@ -145,6 +152,8 @@ public class CameraCom : MonoBehaviour
             if (value == 0)
             {
                 stopRotate = true;
+
+                pinController.ShowHidePinPoints(true);
             }
         }
     }
@@ -304,7 +313,7 @@ public class CameraCom : MonoBehaviour
             // Check Zoom In & Out
             Vector3 screenPoint = camera_this.WorldToScreenPoint(objectOriginPosition);
             // Range Over (Zoom In)
-            if (screenPoint.z < 2)
+            if (screenPoint.z < maxZoomIn)
             {
                 if (mouse_scrollwheel > 0)
                 {
@@ -312,7 +321,7 @@ public class CameraCom : MonoBehaviour
                 }
             }
             // Range Over (Zoom Out)
-            if (screenPoint.z > 10)
+            if (screenPoint.z > maxZoomOut)
             {
                 if (mouse_scrollwheel < 0)
                 {

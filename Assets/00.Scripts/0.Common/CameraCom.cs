@@ -139,10 +139,29 @@ public class CameraCom : MonoBehaviour
         obejct_pivot.SetActive(isOn);
     }
 
-    public void ObjectRotate_SetValue(float angle)
+    public void ObjectRotate_SetValue(Vector3 axis, float angle)
     {
-        Vector3 rotateAngle = new Vector3(0, angle, 0);
-        object_target.rotation = Quaternion.Euler(rotateAngle);
+        //object_target.RotateAround(object_target.position, axis, angle);
+        StartCoroutine(SetRotateAnimation(object_target, axis, angle, 3f)); // 3초 동안 회전
+    }
+
+    IEnumerator SetRotateAnimation(Transform target, Vector3 axis, float angle, float time)
+    {
+        float currTime = 0f;
+        float initAngle = 0f;
+
+        while (currTime < time)
+        {
+            float currentAngle = Mathf.Lerp(initAngle, angle, currTime / time);
+            float setNewAngle = currentAngle - initAngle;
+            target.RotateAround(target.position, axis, setNewAngle);
+            initAngle = currentAngle;
+            currTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // 정확한 최종 각도 세팅
+        target.RotateAround(target.position, axis, angle - initAngle);
     }
 
     void ObjectRotate()

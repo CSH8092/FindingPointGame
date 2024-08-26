@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
-public class ObejctControlCom : MonoBehaviour
+public class ObjectController : MonoBehaviour
 {
     // Components
     [Header("Buttons")]
@@ -16,9 +16,8 @@ public class ObejctControlCom : MonoBehaviour
     [Header("Prefabs")]
     public GameObject prefab_PinPoint;
 
-    [Header("Target Object")]
-    public GameObject object_Target;
-    public Camera camera_mainCam;
+    [Header("Components")]
+    public CameraCom component_cameraCom;
 
     // Values
     Ray ray;
@@ -49,9 +48,9 @@ public class ObejctControlCom : MonoBehaviour
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out raycastHit, 1000, layerMask))
             {
-                GameObject pinObject = Instantiate(prefab_PinPoint, object_Target.transform);
+                GameObject pinObject = Instantiate(prefab_PinPoint, component_cameraCom.object_target.transform);
                 PinPoint pinPoint = pinObject.GetComponent<PinPoint>();
-                pinPoint.CreatePinPoint(camera_mainCam, raycastHit.point, currentPinType);
+                pinPoint.CreatePinPoint(component_cameraCom.camera_this, raycastHit.point, currentPinType);
             }
         }
     }

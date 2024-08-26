@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -13,9 +14,12 @@ public class CameraCom : MonoBehaviour
     public PinController pinController;
     GameObject obejct_pivot = null;
 
-    Camera camera_this;
-    Transform transform_camera;
-    SphereCollider collider_camera;
+    // Camera Setting
+    [Header("Speed Value")]
+    public bool canRotateX = true;
+    public bool canRotateY = true;
+    public bool canZoom = true;
+    public bool canPan = true;
 
     // Values
     [Header("Speed Value")]
@@ -35,6 +39,10 @@ public class CameraCom : MonoBehaviour
     float maxZoomOut = 10;
     [SerializeField]
     float maxZoomIn = 2;
+
+    public Camera camera_this { get; set; }
+    Transform transform_camera;
+    SphereCollider collider_camera;
 
     float mouse_scrollwheel;
     float mouse_horizontal;
@@ -84,9 +92,18 @@ public class CameraCom : MonoBehaviour
         GetMouseEvent();
 
         // Set Cam & Object Transform
-        ObjectRotate();
-        CameraZoom();
-        CameraPan(); // todo : 나중에 Objct Pan으로 바꾸기
+        if(canRotateX || canRotateY)
+        {
+            ObjectRotate();
+        }
+        if (canZoom)
+        {
+            CameraZoom();
+        }
+        if (canPan)
+        {
+            CameraPan();
+        }
 
 #if false
         // 해당 게임에는 맞지 않는 Control 방식이라 판단 -> 주석 처리
@@ -97,9 +114,18 @@ public class CameraCom : MonoBehaviour
 
     void GetMouseEvent()
     {
-        mouse_horizontal = Input.GetAxis("Mouse X");
-        mouse_vertical = Input.GetAxis("Mouse Y");
-        mouse_scrollwheel = Input.GetAxisRaw("Mouse ScrollWheel") * zoomSpeed;
+        if (canRotateX)
+        {
+            mouse_horizontal = Input.GetAxis("Mouse X");
+        }
+        if (canRotateY)
+        {
+            mouse_vertical = Input.GetAxis("Mouse Y");
+        }
+        if (canZoom)
+        {
+            mouse_scrollwheel = Input.GetAxisRaw("Mouse ScrollWheel") * zoomSpeed;
+        }
     }
 
     void ShowPivotPoint(bool isOn)
@@ -113,6 +139,12 @@ public class CameraCom : MonoBehaviour
         obejct_pivot.SetActive(isOn);
     }
 
+    public void ObjectRotate_SetValue(float angle)
+    {
+        Vector3 rotateAngle = new Vector3(0, angle, 0);
+        object_target.rotation = Quaternion.Euler(rotateAngle);
+    }
+
     void ObjectRotate()
     {
         if (Input.GetMouseButtonDown(1))
@@ -122,7 +154,10 @@ public class CameraCom : MonoBehaviour
             isRotate = true;
             rotateStartPoint = Input.mousePosition;
 
-            pinController.ShowHidePinPoints(false);
+            if (pinController != null)
+            {
+                pinController.ShowHidePinPoints(false);
+            }
         }
         else if (Input.GetMouseButton(1))
         {
@@ -140,7 +175,7 @@ public class CameraCom : MonoBehaviour
             stopRotate = false;
         }
 
-        if (!stopRotate)
+        if ((canRotateX && canRotateY) && !stopRotate)
         {
             // 입력이 끝났을 때, 움직임 관성 적용
             object_target.RotateAround(object_target.position, Vector3.right, rotateAccele * distance_InputMouse.y);
@@ -153,7 +188,10 @@ public class CameraCom : MonoBehaviour
             {
                 stopRotate = true;
 
-                pinController.ShowHidePinPoints(true);
+                if (pinController != null)
+                {
+                    pinController.ShowHidePinPoints(true);
+                }
             }
         }
     }

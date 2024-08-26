@@ -835,6 +835,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   object_target: {fileID: 752540004}
   pinController: {fileID: 1836505431}
+  canRotateX: 1
+  canRotateY: 1
+  canZoom: 1
+  canPan: 1
   rotateSpeed: 5
   zoomSpeed: 10
   xPanSpeed: 15
@@ -1698,7 +1702,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1836505429}
-  - component: {fileID: 1836505430}
+  - component: {fileID: 1836505432}
   - component: {fileID: 1836505431}
   m_Layer: 0
   m_Name: Manager_InGame
@@ -1722,7 +1726,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1836505430
+--- !u!114 &1836505431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836505428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35a5a1f751c22f24399d2511e2b7e221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1836505432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1740,19 +1756,7 @@ MonoBehaviour:
   button_diffSize: {fileID: 776957654}
   prefab_PinPoint: {fileID: 1950436217904713689, guid: 3e357b2e6b0b8dc4d894b3c412eaa664, type: 3}
   object_Target: {fileID: 752540000}
-  camera_mainCam: {fileID: 963194227}
---- !u!114 &1836505431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1836505428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35a5a1f751c22f24399d2511e2b7e221, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  component_cameraCom: {fileID: 963194233}
 --- !u!1 &2058020960
 GameObject:
   m_ObjectHideFlags: 0

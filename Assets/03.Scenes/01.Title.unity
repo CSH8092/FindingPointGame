@@ -586,6 +586,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 737193450}
+  - component: {fileID: 737193452}
+  - component: {fileID: 737193451}
   m_Layer: 0
   m_Name: Manager_Title
   m_TagString: Untagged
@@ -608,6 +610,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &737193451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737193448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e41039a2b7250c44bf1ff5db16c068b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button_Start: {fileID: 1360242923}
+  button_Exit: {fileID: 174669481}
+--- !u!114 &737193452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737193448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be31bf5c6857734eafd66719c881978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &752540000
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,6 +985,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   object_target: {fileID: 752540004}
+  pinController: {fileID: 0}
+  canRotateX: 1
+  canRotateY: 1
+  canZoom: 1
+  canPan: 1
   rotateSpeed: 5
   zoomSpeed: 5
   xPanSpeed: 2

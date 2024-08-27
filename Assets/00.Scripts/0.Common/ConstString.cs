@@ -10,5 +10,6 @@ public class ConstString
         type_position,
         type_rotation,
         type_size,
+        type_other
     }
 }

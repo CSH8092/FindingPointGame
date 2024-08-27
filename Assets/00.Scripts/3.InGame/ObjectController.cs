@@ -12,6 +12,7 @@ public class ObjectController : MonoBehaviour
     public Button button_diffPos;
     public Button button_diffRot;
     public Button button_diffSize;
+    public Button button_diffOther;
 
     [Header("Prefabs")]
     public GameObject prefab_PinPoint;
@@ -34,6 +35,7 @@ public class ObjectController : MonoBehaviour
         button_diffPos.onClick.AddListener(() => SetPinType(ConstString.PinType.type_position));
         button_diffRot.onClick.AddListener(() => SetPinType(ConstString.PinType.type_rotation));
         button_diffSize.onClick.AddListener(() => SetPinType(ConstString.PinType.type_size));
+        button_diffOther.onClick.AddListener(() => SetPinType(ConstString.PinType.type_other));
     }
 
     void Update()

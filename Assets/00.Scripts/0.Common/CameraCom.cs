@@ -13,6 +13,7 @@ public class CameraCom : MonoBehaviour
     public Transform object_target;
     public PinController pinController;
     GameObject obejct_pivot = null;
+    SingletonCom sc;
 
     // Camera Setting
     [Header("Speed Value")]
@@ -76,6 +77,8 @@ public class CameraCom : MonoBehaviour
 
     void Start()
     {
+        sc = SingletonCom.Instance;
+
         camera_this = this.GetComponent<Camera>();
         transform_camera = this.GetComponent<Transform>();
         collider_camera = this.GetComponent<SphereCollider>();
@@ -177,6 +180,8 @@ public class CameraCom : MonoBehaviour
             {
                 pinController.ShowHidePinPoints(false);
             }
+
+            sc.isMenuArrange = false;
         }
         else if (Input.GetMouseButton(1))
         {
@@ -192,6 +197,8 @@ public class CameraCom : MonoBehaviour
 
             distance_InputMouse = rotateEndPoint - rotateStartPoint;
             stopRotate = false;
+
+            sc.isMenuArrange = true;
         }
 
         if ((canRotateX && canRotateY) && !stopRotate)

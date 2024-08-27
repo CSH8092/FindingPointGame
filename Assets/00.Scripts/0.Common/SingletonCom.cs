@@ -6,6 +6,8 @@ public class SingletonCom
 {
     public List<PinPoint> list_PinPoints = new List<PinPoint>();
 
+    public bool isMenuArrange = false;
+
     private SingletonCom() { }
 
     private static SingletonCom instance = null;

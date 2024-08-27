@@ -1,20 +1,25 @@
-# FindingPoint
+# Finding Point
 
+**Finding Point**는 3D 모델을 비교해 서로 다른 점을 찾는 게임 프로젝트입니다. 이 프로젝트는 Demo 단계에 있으며, 기획 내용은 추후 수정될 수 있습니다.
 
-# [Git Commit Message Style]
-### https://udacity.github.io/git-styleguide/
+## 프로젝트 개요
 
+이 게임에서 사용자는 두 개의 3D 모델을 비교하여 서로 다른 4가지 포인트(색깔, 크기, 위치, 회전)를 찾아야 합니다. 다른 점들은 게임이 시작될 때마다 랜덤으로 생성되며, 사용자는 게임 내에서 pin을 사용해 발견한 차이점을 기록할 수 있습니다.
 
-## feat: A new feature
+## 주요 기능
 
-## fix: A bug fix
+- **3D 모델 비교**: 두 개의 3D 모델을 비교하여 차이점을 찾는 게임.
+- **4가지 포인트**: 사용자는 색깔, 크기, 위치, 회전과 관련된 차이점을 찾아야 합니다.
+- **랜덤 요소**: 다른 점은 게임이 시작될 때마다 랜덤으로 생성됩니다.
+- **Pin 기록**: 발견한 차이점을 게임 내에서 pin을 사용해 기록할 수 있습니다.
 
-## docs: Changes to documentation
+## 현재 진행 상황
 
-## style: Formatting, missing semi colons, etc; no code change
+- 프로젝트는 아직 초기 Demo 단계로, 주요 기능을 구현 중에 있습니다.
+- 기획된 내용은 추후 변경될 가능성이 있습니다.
 
-## refactor: Refactoring production code
+## 향후 계획
 
-## test: Adding tests, refactoring test; no production code change
-
-## chore: Updating build tasks, package manager configs, etc; no production code change
+- 게임의 완성도 향상 및 사용자 인터페이스 개선.
+- 추가적인 게임 모드 및 기능 개발.
+- 사용자 피드백을 반영한 기획 수정.

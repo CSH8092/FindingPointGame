@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public class MenuController : MonoBehaviour
 {
     [Header("Target Object")]
+    Material skyboxMaterial;
     public GameObject object_ParentMenu;
     public GameObject prefab_MenuButton;
     [SerializeField]
@@ -28,15 +30,22 @@ public class MenuController : MonoBehaviour
     public TextMeshProUGUI text_selectStage;
 
     // Values
-    List<GameObject> list_MenuObjects = new List<GameObject>();
+    List<MenuObjectCom> list_MenuObjects = new List<MenuObjectCom>();
 
     float angle;
     float x, y, z;
+
     int selectStageNum = 0;
+    int prevStageIndex = -1;
+
+    private void Awake()
+    {
+        sc = SingletonCom.Instance;
+    }
 
     void Start()
     {
-        sc = SingletonCom.Instance;
+        skyboxMaterial = RenderSettings.skybox;
 
         ReadNSetData();
 
@@ -78,16 +87,43 @@ public class MenuController : MonoBehaviour
 
     void ReadNSetData()
     {
-        // 1. menu button 마다 stage mesh 추가
+        // 1. Resources에 있는 mesh로 Menu 생성
+        CreateMenu();
+
         // 2. Json 등의 파일 읽어와서 이미 unlock한 stage 처리 필요 -> material 설정
-        CreateMenu(count_menu);
+
+        // 3. 가장 최근에 실행했던 메뉴로 돌려줌
 
         int index = 0;
-        SetState(index);
+        SetSelectMenu(0, index);
     }
 
-    public void CreateMenu(int count_menu)
+    public void CreateMenu()
     {
+#if true
+        Mesh[] meshes = Resources.LoadAll<Mesh>("Stages");
+
+        int totalCount = meshes.Length;
+        int i = 0;
+        foreach (Mesh mesh in meshes)
+        {
+            // Parent Menu Transform의 Z축에서 부터 시작
+            angle = (i++ * Mathf.PI * 2 / totalCount) - Mathf.PI / 2;
+            x = Mathf.Cos(angle) * value_farDistance;
+            z = Mathf.Sin(angle) * value_farDistance;
+
+            Vector3 new_position = new Vector3(x, 0, z);
+            GameObject menuObject = Instantiate(prefab_MenuButton, object_ParentMenu.transform);
+            menuObject.transform.position = new_position;
+            menuObject.transform.LookAt(object_ParentMenu.transform);
+            menuObject.name = mesh.name; // string.Format("Menu Button {0}", i);
+
+            MenuObjectCom menuCom = menuObject.GetComponent<MenuObjectCom>();
+            menuCom.SetMeshData(mesh);
+            list_MenuObjects.Add(menuCom);
+        }
+        count_menu = totalCount;
+#else
         for (int i = 0; i < count_menu; i++)
         {
             // Parent Menu Transform의 Z축에서 부터 시작
@@ -101,8 +137,12 @@ public class MenuController : MonoBehaviour
             menuObject.transform.LookAt(object_ParentMenu.transform);
             menuObject.name = string.Format("Menu Button {0}", i);
 
-            list_MenuObjects.Add(menuObject);
+            MenuObjectCom menuCom = menuObject.GetComponent<MenuObjectCom>();
+
+
+            list_MenuObjects.Add(menuCom);
         }
+#endif
     }
 
     void ClickMenuChangeButton(bool isLeft)
@@ -143,5 +183,50 @@ public class MenuController : MonoBehaviour
         selectStageNum = stageNum;
         string stageName = object_ParentMenu.transform.GetChild(selectStageNum).name;
         text_selectStage.text = stageName;
+
+        if (prevStageIndex != -1)
+        {
+            list_MenuObjects[prevStageIndex].SetHighlight(false);
+        }
+
+        list_MenuObjects[stageNum].SetHighlight(true);
+        prevStageIndex = stageNum;
+
+        SetSkyBoxRandom();
+    }
+
+    void SetSkyBoxRandom()
+    {
+        // 좀만 더 해보고, 괜찮으면 animation 넣어서 smooth하게 해주기
+
+        if (skyboxMaterial != null)
+        {
+            Material new_skyboxMaterial = new Material(skyboxMaterial);
+            
+            // Set New Color
+            if (new_skyboxMaterial.HasProperty("_TopColor"))
+            {
+                new_skyboxMaterial.SetColor("_TopColor", Color.cyan); // 일단 고정
+            }
+            if (new_skyboxMaterial.HasProperty("_BottomColor"))
+            {
+                new_skyboxMaterial.SetColor("_BottomColor", Color.magenta);
+            }
+
+            // Set New Vector
+            if (new_skyboxMaterial.HasProperty("_Up"))
+            {
+                Random rand = new Random();
+
+                float x = (float)rand.NextDouble();
+                float y = (float)rand.NextDouble();
+                float z = rand.Next(0, 1);
+
+                Vector3 new_Up = new Vector3(x, y, z);
+                new_skyboxMaterial.SetVector("_Up", new_Up);
+            }
+
+            RenderSettings.skybox = new_skyboxMaterial;
+        }
     }
 }

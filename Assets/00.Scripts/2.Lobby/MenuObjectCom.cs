@@ -12,7 +12,7 @@ public class MenuObjectCom : MonoBehaviour
     [SerializeField]
     float time_playTime = 0.8f;
     [SerializeField]
-    Vector3 scale_highlight = new Vector3(1.5f, 1.5f, 1.5f);
+    Vector3 scale_highlight = new Vector3(1.3f, 1.3f, 1.3f);
 
     void Start()
     {

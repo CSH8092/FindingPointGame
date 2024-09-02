@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7930492789612267611}
   - component: {fileID: 475137101696395742}
   - component: {fileID: 6207288914759418140}
-  - component: {fileID: 3352768913023928331}
+  - component: {fileID: 2762046244089690729}
+  - component: {fileID: 8911266642089768068}
   m_Layer: 9
   m_Name: MenuButton
   m_TagString: Untagged
@@ -98,9 +99,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time_playTime: 2
-  scale_highlight: {x: 1.8, y: 1.8, z: 1.8}
---- !u!65 &3352768913023928331
-BoxCollider:
+  scale_highlight: {x: 1.3, y: 1.3, z: 1.3}
+--- !u!136 &2762046244089690729
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -117,6 +118,35 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  serializedVersion: 2
+  m_Radius: 1.9255998
+  m_Height: 3.3336549
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &8911266642089768068
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8659947192363143254}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

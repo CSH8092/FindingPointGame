@@ -12,6 +12,8 @@ public class MenuController : MonoBehaviour
     Material skyboxMaterial;
     public GameObject object_ParentMenu;
     public GameObject prefab_MenuButton;
+    public Cloth object_ClothLeft;
+    public Cloth object_ClothRight;
     [SerializeField]
     int count_menu = 8;
     [SerializeField]
@@ -31,6 +33,7 @@ public class MenuController : MonoBehaviour
 
     // Values
     List<MenuObjectCom> list_MenuObjects = new List<MenuObjectCom>();
+    List<CapsuleCollider> list_Capsule= new List<CapsuleCollider>();
 
     float angle;
     float x, y, z;
@@ -100,7 +103,6 @@ public class MenuController : MonoBehaviour
 
     public void CreateMenu()
     {
-#if true
         Mesh[] meshes = Resources.LoadAll<Mesh>("Stages");
 
         int totalCount = meshes.Length;
@@ -121,28 +123,13 @@ public class MenuController : MonoBehaviour
             MenuObjectCom menuCom = menuObject.GetComponent<MenuObjectCom>();
             menuCom.SetMeshData(mesh);
             list_MenuObjects.Add(menuCom);
+
+            list_Capsule.Add(menuObject.GetComponent<CapsuleCollider>());
         }
         count_menu = totalCount;
-#else
-        for (int i = 0; i < count_menu; i++)
-        {
-            // Parent Menu Transform의 Z축에서 부터 시작
-            angle = (i * Mathf.PI * 2 / count_menu) - Mathf.PI / 2;
-            x = Mathf.Cos(angle) * value_farDistance;
-            z = Mathf.Sin(angle) * value_farDistance;
 
-            Vector3 new_position = new Vector3(x, 0, z);
-            GameObject menuObject = Instantiate(prefab_MenuButton, object_ParentMenu.transform);
-            menuObject.transform.position = new_position;
-            menuObject.transform.LookAt(object_ParentMenu.transform);
-            menuObject.name = string.Format("Menu Button {0}", i);
-
-            MenuObjectCom menuCom = menuObject.GetComponent<MenuObjectCom>();
-
-
-            list_MenuObjects.Add(menuCom);
-        }
-#endif
+        object_ClothLeft.capsuleColliders = list_Capsule.ToArray();
+        object_ClothRight.capsuleColliders = list_Capsule.ToArray();
     }
 
     void ClickMenuChangeButton(bool isLeft)
@@ -192,7 +179,7 @@ public class MenuController : MonoBehaviour
         list_MenuObjects[stageNum].SetHighlight(true);
         prevStageIndex = stageNum;
 
-        SetSkyBoxRandom();
+        ///SetSkyBoxRandom();
     }
 
     void SetSkyBoxRandom()
@@ -206,7 +193,7 @@ public class MenuController : MonoBehaviour
             // Set New Color
             if (new_skyboxMaterial.HasProperty("_TopColor"))
             {
-                new_skyboxMaterial.SetColor("_TopColor", Color.cyan); // 일단 고정
+                new_skyboxMaterial.SetColor("_TopColor", Color.green); // 일단 고정
             }
             if (new_skyboxMaterial.HasProperty("_BottomColor"))
             {

@@ -17,11 +17,11 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   mode:
-    overrideState: 0
+    overrideState: 1
     value: 0
   color:
     overrideState: 1
-    value: {r: 1, g: 0.504717, b: 0.92230856, a: 1}
+    value: {r: 0.22811829, g: 0, b: 0.4339623, a: 1}
   center:
     overrideState: 0
     value: {x: 0.5, y: 0.5}
@@ -56,22 +56,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556797029e73b2347956b6579e77e05b, type: 3}
   m_Name: DepthOfField
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
   focusDistance:
     overrideState: 1
-    value: 100
+    value: 6.5
   aperture:
     overrideState: 1
-    value: 1
+    value: 2.5
   focalLength:
     overrideState: 0
     value: 50
   kernelSize:
     overrideState: 1
-    value: 1
+    value: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,14 +105,14 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   mode:
-    overrideState: 0
+    overrideState: 1
     value: 1
   intensity:
     overrideState: 1
     value: 0.45
   color:
-    overrideState: 0
-    value: {r: 0, g: 0, b: 0, a: 1}
+    overrideState: 1
+    value: {r: 0.18533166, g: 0, b: 0.2735849, a: 1}
   ambientOnly:
     overrideState: 0
     value: 1

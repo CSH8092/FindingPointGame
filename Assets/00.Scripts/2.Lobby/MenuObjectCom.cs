@@ -6,7 +6,7 @@ using UnityEngine;
 public class MenuObjectCom : MonoBehaviour
 {
     // Mesh
-    Mesh mesh_this;
+    public MeshFilter mesh_this;
 
     // Set Animation Value
     [SerializeField]
@@ -16,7 +16,7 @@ public class MenuObjectCom : MonoBehaviour
 
     void Start()
     {
-        mesh_this = this.GetComponent<Mesh>();
+
     }
 
     void Update()
@@ -26,7 +26,7 @@ public class MenuObjectCom : MonoBehaviour
 
     public void SetMeshData(Mesh newMesh)
     {
-        mesh_this = newMesh;
+        mesh_this.sharedMesh = newMesh;
     }
 
     public void SetHighlight(bool isOn)

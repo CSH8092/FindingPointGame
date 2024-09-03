@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ public class MenuController : MonoBehaviour
     public GameObject prefab_MenuButton;
     public Cloth object_ClothLeft;
     public Cloth object_ClothRight;
+    public GameObject object_LeftButton;
+    public GameObject object_RightButton;
     [SerializeField]
     int count_menu = 8;
     [SerializeField]
@@ -49,18 +52,47 @@ public class MenuController : MonoBehaviour
     void Start()
     {
         skyboxMaterial = RenderSettings.skybox;
+        layerMask = LayerMask.GetMask("ButtonObject");
 
         ReadNSetData();
 
-        button_Left.onClick.AddListener(() => ClickMenuChangeButton(true));
-        button_Right.onClick.AddListener(() => ClickMenuChangeButton(false));
+        button_Left.onClick.AddListener(() => ClickMenuChangeButton(false));
+        button_Right.onClick.AddListener(() => ClickMenuChangeButton(true));
     }
 
     void Update()
     {
+        ClickMenuChangeButton();
+
         if (sc.isMenuArrange)
         {
             MenuArrange();
+        }
+    }
+
+    Ray ray;
+    RaycastHit raycastHit;
+    int layerMask;
+    void ClickMenuChangeButton()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            ray = component_cameraCom.camera_this.ScreenPointToRay(Input.mousePosition);
+            if(Physics.Raycast(ray, out raycastHit, 100, layerMask))
+            {
+                if (raycastHit.transform.tag.Equals("Button"))
+                {
+                    Debug.LogFormat("Click {0} Button", raycastHit.transform.gameObject.name);
+                    if (raycastHit.transform.name.Contains("_Left"))
+                    {
+                        ClickMenuChangeButton(false); // 버튼 누르면 반대 방향으로 움직여야 하므로 flag 반대
+                    }
+                    else if (raycastHit.transform.name.Contains("_Right"))
+                    {
+                        ClickMenuChangeButton(true);
+                    }
+                }
+            }
         }
     }
 
@@ -132,18 +164,22 @@ public class MenuController : MonoBehaviour
         object_ClothRight.capsuleColliders = list_Capsule.ToArray();
     }
 
-    void ClickMenuChangeButton(bool isLeft)
+    void ClickMenuChangeButton(bool isRight)
     {
         float value = 360 / count_menu;
         int setStageNum;
-        if (isLeft)
+        if (isRight)
         {
             value *= -1;
             setStageNum = --selectStageNum;
+
+            object_RightButton.transform.DOLocalMoveY(0.26f, 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InSine);
         }
         else
         {
             setStageNum = ++selectStageNum;
+
+            object_LeftButton.transform.DOLocalMoveY(0.26f, 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InSine);
         }
 
         // Index 조정

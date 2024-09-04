@@ -18,6 +18,9 @@ public class MenuController : MonoBehaviour
     public GameObject object_LeftButton;
     public GameObject object_RightButton;
     [SerializeField]
+    Material material_Screen;
+
+    [SerializeField]
     int count_menu = 8;
     [SerializeField]
     float value_farDistance = 10f;
@@ -32,7 +35,8 @@ public class MenuController : MonoBehaviour
     public Button button_Right;
 
     [Header("Texts")]
-    public TextMeshProUGUI text_selectStage;
+    public TextMeshPro text_selectStage;
+    public TextMeshProUGUI text_selectStagebyUI;
 
     // Values
     List<MenuObjectCom> list_MenuObjects = new List<MenuObjectCom>();
@@ -43,6 +47,8 @@ public class MenuController : MonoBehaviour
 
     int selectStageNum = 0;
     int prevStageIndex = -1;
+
+    Sequence sequence_screen;
 
     private void Awake()
     {
@@ -206,6 +212,22 @@ public class MenuController : MonoBehaviour
         selectStageNum = stageNum;
         string stageName = object_ParentMenu.transform.GetChild(selectStageNum).name;
         text_selectStage.text = stageName;
+        text_selectStagebyUI.text = stageName;
+
+        if (material_Screen != null)
+        {
+            if (material_Screen.HasProperty("_Brightness"))
+            {
+                material_Screen.SetFloat("_Brightness", 1);
+
+                // 랜덤으로 Brightness 바꿔주기? & 리소스 많이 잡아먹는지 확인하고 적당할때 kill 해주기 or 일정시간마다 실행
+                sequence_screen = DOTween.Sequence();
+                sequence_screen.Append(DOTween.To(() => material_Screen.GetFloat("_Brightness"), x => material_Screen.SetFloat("_Brightness", x), 0f, 0.2f).SetEase(Ease.InOutBack));
+                sequence_screen.AppendInterval(0.1f);
+                sequence_screen.Append(DOTween.To(() => material_Screen.GetFloat("_Brightness"), x => material_Screen.SetFloat("_Brightness", x), 1f, 0.2f).SetEase(Ease.InOutBack));
+                sequence_screen.Play();
+            }
+        }
 
         if (prevStageIndex != -1)
         {

@@ -2009,7 +2009,7 @@ MonoBehaviour:
   button_diffPos: {fileID: 798302729}
   button_diffRot: {fileID: 1589062911}
   button_diffSize: {fileID: 776957654}
-  button_diffOther: {fileID: 0}
+  button_diffOther: {fileID: 417641948}
   prefab_PinPoint: {fileID: 1950436217904713689, guid: 3e357b2e6b0b8dc4d894b3c412eaa664, type: 3}
   component_cameraCom: {fileID: 963194233}
 --- !u!1 &2058020960

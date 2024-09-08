@@ -22,7 +22,7 @@ public class TitleController : MonoBehaviour
 
     void ClickStartButton()
     {
-        SceneLoader.Instance.LoadJumpScene(1); // load next scene
+        SceneLoader.Instance.LoadSceneByName("02.Lobby");
     }
 
     void ClickExitButton()

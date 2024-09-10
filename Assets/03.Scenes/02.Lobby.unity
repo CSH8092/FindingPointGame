@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: e3385c584d79eaf4ca43a160ef9a2581, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 6d66c99312975a54bb5d49da2afbee8e, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 93773621}
   - component: {fileID: 93773623}
   - component: {fileID: 93773622}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cylinder_LeftPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 280730566}
   - component: {fileID: 280730565}
   - component: {fileID: 280730564}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cloth_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2834,7 +2834,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 320140859}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cloth_Curtains
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2870,7 +2870,7 @@ GameObject:
   - component: {fileID: 324660776}
   - component: {fileID: 324660775}
   - component: {fileID: 324660774}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Parent_Menus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2974,7 +2974,7 @@ GameObject:
   - component: {fileID: 334606229}
   - component: {fileID: 334606228}
   - component: {fileID: 334606227}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cloth_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5871,7 +5871,7 @@ GameObject:
   - component: {fileID: 648935098}
   - component: {fileID: 648935100}
   - component: {fileID: 648935099}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cylinder_CenterPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6116,7 +6116,7 @@ GameObject:
   - component: {fileID: 849368419}
   - component: {fileID: 849368421}
   - component: {fileID: 849368420}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Calsule_Left_ButtonBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6923,7 +6923,7 @@ GameObject:
   - component: {fileID: 1505462684}
   - component: {fileID: 1505462683}
   - component: {fileID: 1505462682}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube_BoardScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6988,6 +6988,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 9cc4841ccbf5b9c40862d7532255ccb8, type: 2}
+  - {fileID: 2100000, guid: a6a217ff826d941408d3d072991e01dc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7028,7 +7029,7 @@ GameObject:
   - component: {fileID: 1589563529}
   - component: {fileID: 1589563531}
   - component: {fileID: 1589563530}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Calsule_Right_ButtonBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7112,7 +7113,7 @@ GameObject:
   - component: {fileID: 1657331560}
   - component: {fileID: 1657331562}
   - component: {fileID: 1657331561}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cylinder_RightPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7195,7 +7196,7 @@ GameObject:
   - component: {fileID: 1801708362}
   - component: {fileID: 1801708365}
   - component: {fileID: 1801708364}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cylinder_Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7707,6 +7708,63 @@ CapsuleCollider:
   m_Height: 1.9999998
   m_Direction: 1
   m_Center: {x: 0, y: 0.00000023841858, z: 0}
+--- !u!1001 &1984770372
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 549477990339259240, guid: c846202763f8f094c90d6c552926a774, type: 3}
+      propertyPath: m_Name
+      value: Manager_SceneLoader
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858120190215493811, guid: c846202763f8f094c90d6c552926a774, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.2525375
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858120190215493811, guid: c846202763f8f094c90d6c552926a774, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -9.911585
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858120190215493811, guid: c846202763f8f094c90d6c552926a774, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.7222862
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858120190215493811, guid: c846202763f8f094c90d6c552926a774, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858120190215493811, guid: c846202763f8f094c90d6c552926a774, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858120190215493811, guid: c846202763f8f094c90d6c552926a774, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858120190215493811, guid: c846202763f8f094c90d6c552926a774, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858120190215493811, guid: c846202763f8f094c90d6c552926a774, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858120190215493811, guid: c846202763f8f094c90d6c552926a774, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858120190215493811, guid: c846202763f8f094c90d6c552926a774, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c846202763f8f094c90d6c552926a774, type: 3}
 --- !u!1 &2054189142
 GameObject:
   m_ObjectHideFlags: 0
@@ -7716,7 +7774,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2054189143}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Object_StageMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7759,3 +7817,4 @@ SceneRoots:
   - {fileID: 981957461}
   - {fileID: 260966487}
   - {fileID: 2054189143}
+  - {fileID: 1984770372}

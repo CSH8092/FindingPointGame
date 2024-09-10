@@ -18,9 +18,12 @@ public class ObjectController : MonoBehaviour
     public GameObject prefab_PinPoint;
 
     [Header("Components")]
+    public GameObject camera_ovservation;
     public CameraCom component_cameraCom;
 
     // Values
+    bool isObservationMode = false;
+
     Ray ray;
     RaycastHit raycastHit;
     int layerMask;
@@ -40,7 +43,22 @@ public class ObjectController : MonoBehaviour
 
     void Update()
     {
-        CheckPinPoint();
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            ChangeObservationMode();
+        }
+
+        if (isObservationMode)
+        {
+            CheckPinPoint();
+        }
+    }
+
+    void ChangeObservationMode()
+    {
+        isObservationMode =! isObservationMode;
+        camera_ovservation.SetActive(isObservationMode);
+        SingletonCom.Instance.isObservationMode = this.isObservationMode;
     }
 
     void CheckPinPoint()

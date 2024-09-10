@@ -42,21 +42,11 @@ public class SceneLoader : MonoBehaviour
 
     void Update()
     {
-#if false
+#if true
         // debug code
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneLoader.Instance.LoadSceneByName(SceneManager.GetActiveScene().name);
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
-            SceneLoader.Instance.LoadSceneByName("03.InGame");
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
-            SceneLoader.Instance.LoadSceneByName("01.Title");
         }
 #endif
     }

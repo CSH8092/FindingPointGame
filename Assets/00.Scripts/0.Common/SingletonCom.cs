@@ -7,6 +7,7 @@ public class SingletonCom
     public List<PinPoint> list_PinPoints = new List<PinPoint>();
 
     public bool isMenuArrange = false;
+    public bool isObservationMode = false;
 
     private SingletonCom() { }
 

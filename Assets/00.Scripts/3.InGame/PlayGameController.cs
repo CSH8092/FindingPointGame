@@ -1,13 +1,10 @@
 using DG.Tweening;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using Random = System.Random;
 
-public class MenuController : MonoBehaviour
+public class PlayGameController : MonoBehaviour
 {
     [Header("Target Object")]
     Material skyboxMaterial;
@@ -30,17 +27,13 @@ public class MenuController : MonoBehaviour
     public CameraCom component_cameraCom;
     SingletonCom sc;
 
-    [Header("Buttons")]
-    public Button button_Left;
-    public Button button_Right;
-
     [Header("Texts")]
     public TextMeshPro text_selectStage;
     public TextMeshProUGUI text_selectStagebyUI;
 
     // Values
     List<MenuObjectCom> list_MenuObjects = new List<MenuObjectCom>();
-    List<CapsuleCollider> list_Capsule= new List<CapsuleCollider>();
+    List<CapsuleCollider> list_Capsule = new List<CapsuleCollider>();
 
     float angle;
     float x, y, z;
@@ -61,19 +54,11 @@ public class MenuController : MonoBehaviour
         layerMask = LayerMask.GetMask("ButtonObject");
 
         ReadNSetData();
-
-        button_Left.onClick.AddListener(() => ClickMenuChangeButton(false));
-        button_Right.onClick.AddListener(() => ClickMenuChangeButton(true));
     }
 
     void Update()
     {
         ClickMenuChangeButton();
-
-        if (sc.isMenuArrange)
-        {
-            MenuArrange();
-        }
     }
 
     Ray ray;
@@ -84,7 +69,7 @@ public class MenuController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             ray = component_cameraCom.camera_this.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray, out raycastHit, 100, layerMask))
+            if (Physics.Raycast(ray, out raycastHit, 100, layerMask))
             {
                 if (raycastHit.transform.tag.Equals("Button"))
                 {
@@ -108,42 +93,12 @@ public class MenuController : MonoBehaviour
 
     void ClickGameStart()
     {
-        Debug.LogFormat("<color=yellow>Click {0} Stage!</color>", selectStageNum);
-        SceneLoader.Instance.LoadSceneByName("03.InGame");
-    }
-
-    void MenuArrange()
-    {
-        sc.isMenuArrange = false;
-
-        float min = 9999;
-        int targetIndex = -1;
-        for(int i=0;i< list_MenuObjects.Count; i++)
-        {
-            float distance = Vector3.Distance(component_cameraCom.camera_this.transform.position, list_MenuObjects[i].transform.position);
-            if(distance < min)
-            {
-                min = distance;
-                targetIndex = i;
-            }
-        }
-
-        // 화면 Drag로 Menu 움직였을 때, 자동 Select Menu 보정
-        Vector3 to = list_MenuObjects[targetIndex].transform.forward * -1;
-        Vector3 from = component_cameraCom.camera_this.transform.position - object_ParentMenu.transform.position;
-        float angle = Vector3.SignedAngle(to, from, Vector3.up);
-
-        SetSelectMenu(angle, targetIndex);
+        Debug.LogFormat("<color=yellow>Click {0} Object!</color>", selectStageNum);
     }
 
     void ReadNSetData()
     {
-        // 1. Resources에 있는 mesh로 Menu 생성
         CreateMenu();
-
-        // 2. Json 등의 파일 읽어와서 이미 unlock한 stage 처리 필요 -> material 설정
-
-        // 3. 가장 최근에 실행했던 메뉴로 돌려줌
 
         int index = 0;
         SetSelectMenu(0, index);
@@ -221,8 +176,8 @@ public class MenuController : MonoBehaviour
     {
         selectStageNum = stageNum;
         string stageName = object_ParentMenu.transform.GetChild(selectStageNum).name;
-        text_selectStage.text = stageName;
-        text_selectStagebyUI.text = stageName;
+        //text_selectStage.text = stageName;
+        //text_selectStagebyUI.text = stageName;
 
         if (material_Screen != null)
         {
@@ -239,49 +194,12 @@ public class MenuController : MonoBehaviour
             }
         }
 
-        if (prevStageIndex != -1)
-        {
-            list_MenuObjects[prevStageIndex].SetHighlight(false);
-        }
+        //if (prevStageIndex != -1)
+        //{
+        //    list_MenuObjects[prevStageIndex].SetHighlight(false);
+        //}
 
-        list_MenuObjects[stageNum].SetHighlight(true);
+        //list_MenuObjects[stageNum].SetHighlight(true);
         prevStageIndex = stageNum;
-
-        ///SetSkyBoxRandom();
-    }
-
-    void SetSkyBoxRandom()
-    {
-        // 좀만 더 해보고, 괜찮으면 animation 넣어서 smooth하게 해주기
-
-        if (skyboxMaterial != null)
-        {
-            Material new_skyboxMaterial = new Material(skyboxMaterial);
-            
-            // Set New Color
-            if (new_skyboxMaterial.HasProperty("_TopColor"))
-            {
-                new_skyboxMaterial.SetColor("_TopColor", Color.green); // 일단 고정
-            }
-            if (new_skyboxMaterial.HasProperty("_BottomColor"))
-            {
-                new_skyboxMaterial.SetColor("_BottomColor", Color.magenta);
-            }
-
-            // Set New Vector
-            if (new_skyboxMaterial.HasProperty("_Up"))
-            {
-                Random rand = new Random();
-
-                float x = (float)rand.NextDouble();
-                float y = (float)rand.NextDouble();
-                float z = rand.Next(0, 1);
-
-                Vector3 new_Up = new Vector3(x, y, z);
-                new_skyboxMaterial.SetVector("_Up", new_Up);
-            }
-
-            RenderSettings.skybox = new_skyboxMaterial;
-        }
     }
 }

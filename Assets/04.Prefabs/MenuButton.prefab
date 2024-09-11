@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh_this: {fileID: 7930492789612267611}
+  renderer_this: {fileID: 475137101696395742}
   time_playTime: 2
   scale_highlight: {x: 1.3, y: 1.3, z: 1.3}
 --- !u!136 &2762046244089690729

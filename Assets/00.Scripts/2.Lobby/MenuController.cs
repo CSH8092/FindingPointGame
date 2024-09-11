@@ -9,8 +9,10 @@ using Random = System.Random;
 
 public class MenuController : MonoBehaviour
 {
+    [Header("Resources")]
+    public Material material_Hologram;
+
     [Header("Target Object")]
-    Material skyboxMaterial;
     public GameObject object_ParentMenu;
     public GameObject prefab_MenuButton;
     public Cloth object_ClothLeft;
@@ -19,6 +21,7 @@ public class MenuController : MonoBehaviour
     public GameObject object_RightButton;
     [SerializeField]
     Material material_Screen;
+    Material skyboxMaterial;
 
     [SerializeField]
     int count_menu = 8;
@@ -170,6 +173,7 @@ public class MenuController : MonoBehaviour
 
             MenuObjectCom menuCom = menuObject.GetComponent<MenuObjectCom>();
             menuCom.SetMeshData(mesh);
+            menuCom.SetMaterial(material_Hologram);
             list_MenuObjects.Add(menuCom);
 
             list_Capsule.Add(menuObject.GetComponent<CapsuleCollider>());

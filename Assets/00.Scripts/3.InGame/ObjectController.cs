@@ -65,8 +65,8 @@ public class ObjectController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out raycastHit, 1000, layerMask))
+            ray = component_cameraCom.camera_this.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out raycastHit, 100000, layerMask))
             {
                 GameObject pinObject = Instantiate(prefab_PinPoint, component_cameraCom.object_target.transform);
                 PinPoint pinPoint = pinObject.GetComponent<PinPoint>();
@@ -78,5 +78,6 @@ public class ObjectController : MonoBehaviour
     void SetPinType(ConstString.PinType type)
     {
         currentPinType = type;
+        Debug.LogFormat("Set Pin Type : {0}", currentPinType.ToString());
     }
 }

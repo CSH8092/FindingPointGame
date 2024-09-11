@@ -587,6 +587,7 @@ GameObject:
   m_Component:
   - component: {fileID: 737193450}
   - component: {fileID: 737193451}
+  - component: {fileID: 737193452}
   m_Layer: 0
   m_Name: Manager_Title
   m_TagString: Untagged
@@ -623,6 +624,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button_Start: {fileID: 1360242923}
   button_Exit: {fileID: 174669481}
+--- !u!114 &737193452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737193448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c8621ad610f6f4c95a358505593d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &752540000
 GameObject:
   m_ObjectHideFlags: 0

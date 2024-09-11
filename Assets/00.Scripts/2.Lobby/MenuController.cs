@@ -189,13 +189,18 @@ public class MenuController : MonoBehaviour
             value *= -1;
             setStageNum = --selectStageNum;
 
-            object_RightButton.transform.DOLocalMoveY(0.26f, 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InSine);
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(object_RightButton.transform.DOLocalMoveY(0.26f, 0.2f).SetEase(Ease.InSine));
+            sequence.Append(object_RightButton.transform.DOLocalMoveY(0.42f, 0.2f).SetEase(Ease.InSine));
         }
         else
         {
             setStageNum = ++selectStageNum;
 
-            object_LeftButton.transform.DOLocalMoveY(0.26f, 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InSine);
+
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(object_LeftButton.transform.DOLocalMoveY(0.26f, 0.2f).SetEase(Ease.InSine));
+            sequence.Append(object_LeftButton.transform.DOLocalMoveY(0.42f, 0.2f).SetEase(Ease.InSine));
         }
 
         // Index Á¶Á¤

@@ -28,6 +28,6 @@ Material:
     - _Exp: 0.5
     m_Colors:
     - _BottomColor: {r: 0.7756144, g: 0.5582948, b: 0.9622642, a: 1}
-    - _TopColor: {r: 0.4198113, g: 1, b: 0.7983412, a: 1}
+    - _TopColor: {r: 0.07475969, g: 0.16801952, b: 0.4528302, a: 1}
     - _Up: {r: 3, g: 2, b: -0.5, a: 0}
   m_BuildTextureStacks: []

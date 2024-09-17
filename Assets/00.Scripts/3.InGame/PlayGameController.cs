@@ -24,6 +24,7 @@ public class PlayGameController : MonoBehaviour
 
     // Components
     [Header("Components")]
+    public ObjectController component_objectController;
     public CameraCom component_cameraCom;
     SingletonCom sc;
 
@@ -87,7 +88,7 @@ public class PlayGameController : MonoBehaviour
                     }
                     else
                     {
-                        ClickGameStart();
+                        component_objectController.ChangeObservationMode(raycastHit.transform.gameObject);
                     }
                 }
             }

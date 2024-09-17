@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class PinPoint : MonoBehaviour
 {
+    Transform transform_TargetObject;
+
     [Header("Objects")]
     public GameObject object_head;
     public Renderer render_head;
@@ -43,34 +47,34 @@ public class PinPoint : MonoBehaviour
         }
     }
 
-    public void CreatePinPoint(Camera cam, Vector3 targetPoint, ConstString.PinType type)
+    public void CreatePinPoint(Camera cam, RaycastHit hitData, ConstString.PinType type)
     {
-        object_point.transform.position = targetPoint;
+        transform_TargetObject = hitData.collider.gameObject.transform;
 
-        Vector3 setLinePoint = transform.TransformPoint(object_point.transform.localPosition); // local to world
-        linerender_line.SetPosition(0, setLinePoint);
-        Vector3 endPoint = setLinePoint.normalized * 3f;
-        linerender_line.SetPosition(1, endPoint);
+        Vector3 setLinePoint = hitData.point;
+        object_head.transform.position = setLinePoint;
+        object_head.transform.rotation = Quaternion.LookRotation(hitData.normal);
 
-        object_head.transform.position = endPoint;
+        Debug.Log("Create PostIt Object!");
+
         thisType = type;
 
         switch (thisType)
         {
             case ConstString.PinType.type_color:
-                render_head.material.SetColor("_Color", Color.magenta);
+                render_head.material.SetColor("_BaseColor", Color.magenta);
                 break;
             case ConstString.PinType.type_position:
-                render_head.material.SetColor("_Color", Color.yellow);
+                render_head.material.SetColor("_BaseColor", Color.yellow);
                 break;
             case ConstString.PinType.type_rotation:
-                render_head.material.SetColor("_Color", Color.green);
+                render_head.material.SetColor("_BaseColor", Color.green);
                 break;
             case ConstString.PinType.type_size:
-                render_head.material.SetColor("_Color", Color.cyan);
+                render_head.material.SetColor("_BaseColor", Color.cyan);
                 break;
             default:
-                render_head.material.color = Color.white;
+                render_head.material.SetColor("_BaseColor", Color.white);
                 break;
         }
 
@@ -79,11 +83,14 @@ public class PinPoint : MonoBehaviour
 
     public void SetShowHide(bool isShow)
     {
+        object_head.SetActive(isShow);
+
+        /*
         // recal line points
         if (isShow)
         {
             // line points
-            Vector3 setLinePoint = transform.TransformPoint(object_point.transform.localPosition); // local to world
+            Vector3 setLinePoint = transform_TargetObject.TransformPoint(object_point.transform.localPosition); // local to world
             linerender_line.SetPosition(0, setLinePoint);
             Vector3 endPoint = setLinePoint.normalized * 3f;
             linerender_line.SetPosition(1, endPoint);
@@ -92,6 +99,7 @@ public class PinPoint : MonoBehaviour
         linerender_line.gameObject.SetActive(isShow);
         object_head.SetActive(isShow);
         object_point.SetActive(isShow);
+        */
     }
 
     public void DeleteThisPin()

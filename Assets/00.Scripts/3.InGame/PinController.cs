@@ -29,8 +29,9 @@ public class PinController : MonoBehaviour
         int count = sc.list_PinPoints.Count;
         for (int i = 0; i < count; i++)
         {
-            sc.list_PinPoints[i].DeleteThisPin();
+            sc.list_PinPoints[0].DeleteThisPin();
         }
+        Debug.LogFormat("Deleted {0} pins!", count);
     }
 
     public void ShowHidePinPoints(bool isShow)

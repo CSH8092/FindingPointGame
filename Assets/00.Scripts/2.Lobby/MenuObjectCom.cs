@@ -8,6 +8,7 @@ public class MenuObjectCom : MonoBehaviour
     // Mesh
     public MeshFilter mesh_this;
     public MeshRenderer renderer_this;
+    public MeshCollider collider_this;  
 
     // Set Animation Value
     [SerializeField]
@@ -36,6 +37,7 @@ public class MenuObjectCom : MonoBehaviour
     public void SetMeshData(Mesh newMesh)
     {
         mesh_this.sharedMesh = newMesh;
+        collider_this.sharedMesh = newMesh;
     }
 
     public void SetMaterial(Material newMaterial)

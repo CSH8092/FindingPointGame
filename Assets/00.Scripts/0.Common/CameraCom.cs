@@ -89,6 +89,12 @@ public class CameraCom : MonoBehaviour
         SetPanSpeed();
     }
 
+    public void SetTargetObject(GameObject targetObj)
+    {
+        object_target = targetObj.transform;
+        objectOriginPosition = object_target.position;
+    }
+
     void Update()
     {
         // Get Input Event

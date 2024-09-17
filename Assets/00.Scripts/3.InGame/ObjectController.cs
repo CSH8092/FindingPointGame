@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ using static UnityEngine.GraphicsBuffer;
 
 public class ObjectController : MonoBehaviour
 {
+    float time_animation = 0.5f;
+
     // Components
     [Header("Buttons")]
     public Button button_diffColor;
@@ -13,6 +16,7 @@ public class ObjectController : MonoBehaviour
     public Button button_diffRot;
     public Button button_diffSize;
     public Button button_diffOther;
+    public Button button_quitButton;
 
     [Header("Prefabs")]
     public GameObject prefab_PinPoint;
@@ -22,6 +26,9 @@ public class ObjectController : MonoBehaviour
     public CameraCom component_cameraCom;
 
     // Values
+    GameObject object_TargetObject;
+    Vector3 object_OriginPos;
+    Quaternion object_OriginRot;
     bool isObservationMode = false;
 
     Ray ray;
@@ -39,13 +46,15 @@ public class ObjectController : MonoBehaviour
         button_diffRot.onClick.AddListener(() => SetPinType(ConstString.PinType.type_rotation));
         button_diffSize.onClick.AddListener(() => SetPinType(ConstString.PinType.type_size));
         button_diffOther.onClick.AddListener(() => SetPinType(ConstString.PinType.type_other));
+
+        button_quitButton.onClick.AddListener(() => EndObservationMode());
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            ChangeObservationMode();
+            EndObservationMode();
         }
 
         if (isObservationMode)
@@ -54,9 +63,35 @@ public class ObjectController : MonoBehaviour
         }
     }
 
-    void ChangeObservationMode()
+    public void ChangeObservationMode(GameObject object_Target)
     {
-        isObservationMode =! isObservationMode;
+        // Remember Target Object
+        object_TargetObject = object_Target;
+        object_OriginPos = object_TargetObject.transform.position;
+        object_OriginRot = object_TargetObject.transform.localRotation;
+
+        // Set Target Object
+        object_TargetObject.layer = 7;
+        object_TargetObject.transform.DOMove(new Vector3(0, -0.3f, -26), time_animation).SetEase(Ease.InOutBack);
+        object_TargetObject.transform.DORotate(new Vector3(0, 0, 0), time_animation).SetEase(Ease.InOutQuad);
+
+        // Set Target Object to Camera Com
+        component_cameraCom.transform.position = new Vector3(0, 0, -33f);
+        component_cameraCom.SetTargetObject(object_Target);
+
+        isObservationMode = true;
+        camera_ovservation.SetActive(isObservationMode);
+        SingletonCom.Instance.isObservationMode = this.isObservationMode;
+    }
+
+    void EndObservationMode()
+    {
+        // Set Target Object Position
+        object_TargetObject.layer = 9;
+        object_TargetObject.transform.DOMove(object_OriginPos, time_animation).SetEase(Ease.InOutQuad);
+        object_TargetObject.transform.DOLocalRotate(object_OriginRot.eulerAngles, time_animation).SetEase(Ease.InOutQuad);
+
+        isObservationMode = false;
         camera_ovservation.SetActive(isObservationMode);
         SingletonCom.Instance.isObservationMode = this.isObservationMode;
     }
@@ -66,11 +101,11 @@ public class ObjectController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             ray = component_cameraCom.camera_this.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out raycastHit, 100000, layerMask))
+            if (Physics.Raycast(ray, out raycastHit, 10000, layerMask))
             {
                 GameObject pinObject = Instantiate(prefab_PinPoint, component_cameraCom.object_target.transform);
                 PinPoint pinPoint = pinObject.GetComponent<PinPoint>();
-                pinPoint.CreatePinPoint(component_cameraCom.camera_this, raycastHit.point, currentPinType);
+                pinPoint.CreatePinPoint(component_cameraCom.camera_this, raycastHit, currentPinType);
             }
         }
     }

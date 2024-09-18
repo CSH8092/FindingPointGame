@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PinController : MonoBehaviour
 {
-    SingletonCom sc;
+    static SingletonCom sc;
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class PinController : MonoBehaviour
         }
     }
 
-    void DeleteAllPinObjects()
+    public static void DeleteAllPinObjects()
     {
         int count = sc.list_PinPoints.Count;
         for (int i = 0; i < count; i++)

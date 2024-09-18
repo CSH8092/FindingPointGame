@@ -53,6 +53,10 @@ public class MenuController : MonoBehaviour
 
     Sequence sequence_screen;
 
+    Ray ray;
+    RaycastHit raycastHit;
+    int layerMask;
+
     private void Awake()
     {
         sc = SingletonCom.Instance;
@@ -71,6 +75,7 @@ public class MenuController : MonoBehaviour
 
     void Update()
     {
+        //CheckHoverEvent();
         ClickMenuChangeButton();
 
         if (sc.isMenuArrange)
@@ -79,9 +84,6 @@ public class MenuController : MonoBehaviour
         }
     }
 
-    Ray ray;
-    RaycastHit raycastHit;
-    int layerMask;
     void ClickMenuChangeButton()
     {
         if (Input.GetMouseButtonDown(0))
@@ -109,9 +111,29 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    void CheckHoverEvent()
+    {
+        // menu Object OutLine Event
+        ray = component_cameraCom.camera_this.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out raycastHit, 100, layerMask))
+        {
+            if (raycastHit.transform.tag.Equals("Button"))
+            {
+                if (raycastHit.transform.TryGetComponent<Outline>(out Outline outline))
+                {
+                    if (!outline.enabled)
+                    {
+                        //outline.enabled = true;
+                    }
+                }
+            }
+        }
+    }
+
     void ClickGameStart()
     {
         Debug.LogFormat("<color=yellow>Click {0} Stage!</color>", selectStageNum);
+        SingletonCom.Instance.curr_StageNum = selectStageNum;
         SceneLoader.Instance.LoadSceneByName("03.InGame");
     }
 

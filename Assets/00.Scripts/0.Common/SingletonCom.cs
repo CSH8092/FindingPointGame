@@ -9,6 +9,8 @@ public class SingletonCom
     public bool isMenuArrange = false;
     public bool isObservationMode = false;
 
+    public int curr_StageNum = 0;
+
     private SingletonCom() { }
 
     private static SingletonCom instance = null;

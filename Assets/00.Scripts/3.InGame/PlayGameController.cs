@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayGameController : MonoBehaviour
 {
@@ -28,25 +30,23 @@ public class PlayGameController : MonoBehaviour
     public CameraCom component_cameraCom;
     SingletonCom sc;
 
-    [Header("Texts")]
-    public TextMeshPro text_selectStage;
-    public TextMeshProUGUI text_selectStagebyUI;
+    [Header("UI")]
+    public Button button_BackToLobby;
 
     // Values
     List<MenuObjectCom> list_MenuObjects = new List<MenuObjectCom>();
     List<CapsuleCollider> list_Capsule = new List<CapsuleCollider>();
+    Stack<GameObject> stack_Object = new Stack<GameObject>();
 
-    float angle;
-    float x, y, z;
-
-    int selectStageNum = 0;
-    int prevStageIndex = -1;
-
-    Sequence sequence_screen;
+    Ray ray;
+    RaycastHit raycastHit;
+    int layerMask;
 
     private void Awake()
     {
         sc = SingletonCom.Instance;
+
+        button_BackToLobby.onClick.AddListener(() => BackToLobby());
     }
 
     void Start()
@@ -54,7 +54,7 @@ public class PlayGameController : MonoBehaviour
         skyboxMaterial = RenderSettings.skybox;
         layerMask = LayerMask.GetMask("ButtonObject");
 
-        ReadNSetData();
+        StartStageGame();
     }
 
     void Update()
@@ -65,9 +65,11 @@ public class PlayGameController : MonoBehaviour
         }
     }
 
-    Ray ray;
-    RaycastHit raycastHit;
-    int layerMask;
+    void BackToLobby()
+    {
+        SceneLoader.Instance.LoadSceneByName("02.Lobby");
+    }
+
     void ClickMenuChangeButton()
     {
         if (Input.GetMouseButtonDown(0))
@@ -80,11 +82,11 @@ public class PlayGameController : MonoBehaviour
                     Debug.LogFormat("Click {0} Button", raycastHit.transform.gameObject.name);
                     if (raycastHit.transform.name.Contains("_Left"))
                     {
-                        ClickMenuChangeButton(false); // 버튼 누르면 반대 방향으로 움직여야 하므로 flag 반대
+                        ClickFieldButton(false); // 버튼 누르면 반대 방향으로 움직여야 하므로 flag 반대
                     }
                     else if (raycastHit.transform.name.Contains("_Right"))
                     {
-                        ClickMenuChangeButton(true);
+                        ClickFieldButton(true);
                     }
                     else
                     {
@@ -95,115 +97,90 @@ public class PlayGameController : MonoBehaviour
         }
     }
 
-    void ClickGameStart()
+    void StartStageGame()
     {
-        Debug.LogFormat("<color=yellow>Click {0} Object!</color>", selectStageNum);
+        Debug.Log("Start In Game Scene, " + SingletonCom.Instance.curr_StageNum);
+        CreateStageObjects();
     }
 
-    void ReadNSetData()
+    public void CreateStageObjects()
     {
-        CreateMenu();
-
-        int index = 0;
-        SetSelectMenu(0, index);
-    }
-
-    public void CreateMenu()
-    {
+        // Get Stage Mesh
         Mesh[] meshes = Resources.LoadAll<Mesh>("Stages");
+        Mesh mesh_Target = meshes[SingletonCom.Instance.curr_StageNum];
 
-        int totalCount = meshes.Length;
-        int i = 0;
-        foreach (Mesh mesh in meshes)
-        {
-            // Parent Menu Transform의 Z축에서 부터 시작
-            angle = (i++ * Mathf.PI * 2 / totalCount) - Mathf.PI / 2;
-            x = Mathf.Cos(angle) * value_farDistance;
-            z = Mathf.Sin(angle) * value_farDistance;
+        // Set Stage Object
+        GameObject menuObject = Instantiate(prefab_MenuButton); //, object_ParentMenu.transform
+        menuObject.transform.position = new Vector3(-20, 1, -5);
+        menuObject.transform.rotation = Quaternion.Euler(Vector3.zero);
+        menuObject.name = mesh_Target.name;
+        MenuObjectCom menuCom = menuObject.GetComponent<MenuObjectCom>();
+        menuCom.SetMeshData(mesh_Target);
+        list_MenuObjects.Add(menuCom);
 
-            Vector3 new_position = new Vector3(x, 0, z);
-            GameObject menuObject = Instantiate(prefab_MenuButton, object_ParentMenu.transform);
-            menuObject.transform.position = new_position;
-            menuObject.transform.LookAt(object_ParentMenu.transform);
-            menuObject.name = mesh.name; // string.Format("Menu Button {0}", i);
+        menuCom.SetRandomPoint();
 
-            MenuObjectCom menuCom = menuObject.GetComponent<MenuObjectCom>();
-            menuCom.SetMeshData(mesh);
-            list_MenuObjects.Add(menuCom);
-
-            list_Capsule.Add(menuObject.GetComponent<CapsuleCollider>());
-        }
-        count_menu = totalCount;
-
+        // Set Cloths Collider
+        list_Capsule.Add(menuObject.GetComponent<CapsuleCollider>());
         object_ClothLeft.capsuleColliders = list_Capsule.ToArray();
         object_ClothRight.capsuleColliders = list_Capsule.ToArray();
+
+        // Save Object Data
+        stack_Object.Push(menuObject);
+
+        stack_Object.Peek().transform.DOMove(new Vector3(0, 1, -20), 1);
     }
 
-    void ClickMenuChangeButton(bool isRight)
+    void ClickFieldButton(bool isRight)
     {
-        float value = 360 / count_menu;
-        int setStageNum;
         if (isRight)
         {
-            value *= -1;
-            setStageNum = --selectStageNum;
-
             Sequence sequence = DOTween.Sequence();
             sequence.Append(object_RightButton.transform.DOLocalMoveY(0.26f, 0.2f).SetEase(Ease.InSine));
             sequence.Append(object_RightButton.transform.DOLocalMoveY(0.42f, 0.2f).SetEase(Ease.InSine));
+
+            // Control Object
+            GameObject target = stack_Object.Pop();
+            target.transform.DOMove(new Vector3(20, 1, -5), 1).OnComplete(() => StartCoroutine(DestroyTarget(target)));
+            Debug.LogError("here! 1");
+
+            CreateStageObjects();
+
+            // Floor Animation
+            component_cameraCom.ObjectRotate_SetValue(object_ParentMenu.transform.up, -90);
         }
         else
         {
-            setStageNum = ++selectStageNum;
-
-            Sequence sequence = DOTween.Sequence(); 
+            Sequence sequence = DOTween.Sequence();
             sequence.Append(object_LeftButton.transform.DOLocalMoveY(0.26f, 0.2f).SetEase(Ease.InSine));
             sequence.Append(object_LeftButton.transform.DOLocalMoveY(0.42f, 0.2f).SetEase(Ease.InSine));
-        }
 
-        // Index 조정
-        if (setStageNum < 0)
-        {
-            setStageNum = count_menu - 1;
-        }
-        else if (setStageNum > (count_menu - 1))
-        {
-            setStageNum = 0;
-        }
+            // Control Object
+            GameObject target = stack_Object.Pop();
+            target.transform.DOMove(new Vector3(0, 50, 20), 1).OnComplete(() => StartCoroutine(DestroyTarget(target)));
+            Debug.LogError("here! 2");
 
-        SetSelectMenu(value, setStageNum);
+            CreateStageObjects();
+
+            // Floor Animation
+            //component_cameraCom.ObjectRotate_SetValue(object_ParentMenu.transform.up, 90);
+        }
     }
 
-
-
-    void SetSelectMenu(float angle, int targetIndex)
+    IEnumerator DestroyTarget(GameObject target)
     {
-        component_cameraCom.ObjectRotate_SetValue(object_ParentMenu.transform.up, angle);
-        SetState(targetIndex);
-    }
+        // Set Cloths Collider
+        list_Capsule.RemoveAt(0);
+        object_ClothLeft.capsuleColliders = list_Capsule.ToArray();
+        object_ClothRight.capsuleColliders = list_Capsule.ToArray();
 
-    void SetState(int stageNum)
-    {
-        selectStageNum = stageNum;
-        string stageName = object_ParentMenu.transform.GetChild(selectStageNum).name;
-        //text_selectStage.text = stageName;
-        //text_selectStagebyUI.text = stageName;
+        PinController.DeleteAllPinObjects();
 
-        if (material_Screen != null)
-        {
-            if (material_Screen.HasProperty("_Brightness"))
-            {
-                material_Screen.SetFloat("_Brightness", 1);
+        yield return new WaitForSeconds(1f);
 
-                // 랜덤으로 Brightness 바꿔주기? & 리소스 많이 잡아먹는지 확인하고 적당할때 kill 해주기 or 일정시간마다 실행
-                sequence_screen = DOTween.Sequence();
-                sequence_screen.Append(DOTween.To(() => material_Screen.GetFloat("_Brightness"), x => material_Screen.SetFloat("_Brightness", x), 0f, 0.2f).SetEase(Ease.InOutBack));
-                sequence_screen.AppendInterval(0.1f);
-                sequence_screen.Append(DOTween.To(() => material_Screen.GetFloat("_Brightness"), x => material_Screen.SetFloat("_Brightness", x), 1f, 0.2f).SetEase(Ease.InOutBack));
-                sequence_screen.Play();
-            }
-        }
+        target.SetActive(false);
+        GameObject.Destroy(target);
 
-        prevStageIndex = stageNum;
+        yield return null;
     }
 }

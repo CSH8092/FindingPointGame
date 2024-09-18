@@ -1,7 +1,9 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public class MenuObjectCom : MonoBehaviour
 {
@@ -18,6 +20,8 @@ public class MenuObjectCom : MonoBehaviour
     [SerializeField]
     Vector3 scale_highlight = new Vector3(1.3f, 1.3f, 1.3f);
 
+    [Header("Random Values")]
+    int[] array_diffPoint = new int[5] { 0, 0, 0, 0, 0 };
 
     void Start()
     {
@@ -59,5 +63,20 @@ public class MenuObjectCom : MonoBehaviour
             }
             transform.DOScale(Vector3.one, time_playTime / 2).SetEase(Ease.OutExpo);
         }
+    }
+
+    public void SetRandomPoint()
+    {
+        Random rand = new Random();
+        for (int i = 0; i < array_diffPoint.Length; i++)
+        {
+            // 0 ~ 99 사이의 무작위 숫자를 생성하고 10 미만일 경우 1로 설정
+            if (rand.Next(100) < 10)
+            {
+                array_diffPoint[i] = 1;
+            }
+        }
+
+        Debug.LogFormat("Set {0} {1} {2} {3} {4}", array_diffPoint[0], array_diffPoint[1], array_diffPoint[2], array_diffPoint[3], array_diffPoint[4]);
     }
 }

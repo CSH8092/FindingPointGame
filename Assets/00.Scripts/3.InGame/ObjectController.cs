@@ -22,8 +22,9 @@ public class ObjectController : MonoBehaviour
     public GameObject prefab_PinPoint;
 
     [Header("Components")]
-    public GameObject camera_ovservation;
+    //public GameObject camera_ovservation;
     public CameraCom component_cameraCom;
+    public CameraCom component_mainCam;
 
     // Values
     GameObject object_TargetObject;
@@ -80,20 +81,26 @@ public class ObjectController : MonoBehaviour
         component_cameraCom.SetTargetObject(object_Target);
 
         isObservationMode = true;
-        camera_ovservation.SetActive(isObservationMode);
+        component_cameraCom.gameObject.SetActive(isObservationMode);
         SingletonCom.Instance.isObservationMode = this.isObservationMode;
+
+        // Set MainCam Culling Mask
+        component_mainCam.camera_this.cullingMask &= ~(1 << LayerMask.NameToLayer("PinObject"));
     }
 
     void EndObservationMode()
     {
-        // Set Target Object Position
+        // Set Target Object Positionp
         object_TargetObject.layer = 9;
         object_TargetObject.transform.DOMove(object_OriginPos, time_animation).SetEase(Ease.InOutQuad);
         object_TargetObject.transform.DOLocalRotate(object_OriginRot.eulerAngles, time_animation).SetEase(Ease.InOutQuad);
 
         isObservationMode = false;
-        camera_ovservation.SetActive(isObservationMode);
+        component_cameraCom.gameObject.SetActive(isObservationMode);
         SingletonCom.Instance.isObservationMode = this.isObservationMode;
+
+        // Set MainCam Culling Mask
+        component_mainCam.camera_this.cullingMask |= 1 << LayerMask.NameToLayer("PinObject");
     }
 
     void CheckPinPoint()

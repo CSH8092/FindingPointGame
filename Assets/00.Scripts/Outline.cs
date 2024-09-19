@@ -124,6 +124,11 @@ public class Outline : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+
+    }
+
     void OnValidate()
     {
 
@@ -179,11 +184,13 @@ public class Outline : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        Debug.LogError("1");
         this.enabled = true;
     }
 
     private void OnMouseExit()
     {
+        Debug.LogError("2");
         this.enabled = false;
     }
 

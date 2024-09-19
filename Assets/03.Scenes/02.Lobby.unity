@@ -5432,6 +5432,7 @@ GameObject:
   - component: {fileID: 388699171}
   - component: {fileID: 388699170}
   - component: {fileID: 388699172}
+  - component: {fileID: 388699173}
   m_Layer: 9
   m_Name: Calsule_Right_Button
   m_TagString: Button
@@ -5527,6 +5528,24 @@ CapsuleCollider:
   m_Height: 1.9999998
   m_Direction: 1
   m_Center: {x: 0, y: 0.00000023841858, z: 0}
+--- !u!114 &388699173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388699168}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 0.3137255}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &504592544
 GameObject:
   m_ObjectHideFlags: 0
@@ -5589,7 +5608,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 51
+  field of view: 50
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -8940,6 +8959,7 @@ GameObject:
   - component: {fileID: 1972934104}
   - component: {fileID: 1972934103}
   - component: {fileID: 1972934105}
+  - component: {fileID: 1972934107}
   m_Layer: 9
   m_Name: Calsule_Left_Button
   m_TagString: Button
@@ -9047,6 +9067,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ea245dd94b8564dbbc7ce06201645d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1972934107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972934101}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 0.3137255}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &1984770372
 PrefabInstance:
   m_ObjectHideFlags: 0

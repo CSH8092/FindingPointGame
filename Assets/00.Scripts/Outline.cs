@@ -184,13 +184,14 @@ public class Outline : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        Debug.LogError("1");
-        this.enabled = true;
+        if (!SingletonCom.Instance.isObservationMode)
+        {
+            this.enabled = true;
+        }
     }
 
     private void OnMouseExit()
     {
-        Debug.LogError("2");
         this.enabled = false;
     }
 

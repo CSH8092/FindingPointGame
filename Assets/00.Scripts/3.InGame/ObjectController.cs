@@ -71,8 +71,19 @@ public class ObjectController : MonoBehaviour
         object_OriginPos = object_TargetObject.transform.position;
         object_OriginRot = object_TargetObject.transform.localRotation;
 
-        // Set Target Object
-        object_TargetObject.layer = 7;
+        // Turn Off OutLine & Set Target Object Layer
+        GameObject object_mesh = object_TargetObject.transform.GetChild(0).gameObject;
+        object_mesh.layer = 7;
+        for (int i = 0; i < object_mesh.transform.childCount; i++)
+        {
+            object_mesh.transform.GetChild(i).gameObject.AddComponent<Outline>();
+            object_mesh.transform.GetChild(i).gameObject.layer = 7;
+
+            // Set Collider
+            object_mesh.transform.GetChild(i).gameObject.AddComponent<MeshCollider>();
+        }
+
+        // Set Target Object Position
         object_TargetObject.transform.DOMove(new Vector3(0, -0.3f, -26), time_animation).SetEase(Ease.InOutBack);
         object_TargetObject.transform.DORotate(new Vector3(0, 0, 0), time_animation).SetEase(Ease.InOutQuad);
 
@@ -90,8 +101,15 @@ public class ObjectController : MonoBehaviour
 
     void EndObservationMode()
     {
-        // Set Target Object Positionp
-        object_TargetObject.layer = 9;
+        // Set Target Object Layer
+        GameObject object_mesh = object_TargetObject.transform.GetChild(0).gameObject;
+        object_mesh.layer = 9;
+        for (int i = 0; i < object_mesh.transform.childCount; i++)
+        {
+            object_mesh.transform.GetChild(i).gameObject.layer = 9;
+        }
+
+        // Set Target Object Position
         object_TargetObject.transform.DOMove(object_OriginPos, time_animation).SetEase(Ease.InOutQuad);
         object_TargetObject.transform.DOLocalRotate(object_OriginRot.eulerAngles, time_animation).SetEase(Ease.InOutQuad);
 

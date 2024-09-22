@@ -356,8 +356,8 @@ Cloth:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 280730563}
   m_Enabled: 1
-  m_StretchingStiffness: 1
-  m_BendingStiffness: 1
+  m_StretchingStiffness: 0.5
+  m_BendingStiffness: 0.5
   m_UseTethers: 1
   m_UseGravity: 1
   m_Damping: 0
@@ -369,8 +369,8 @@ Cloth:
   m_CollisionMassScale: 0
   m_UseContinuousCollision: 1
   m_UseVirtualParticles: 1
-  m_SolverFrequency: 10
-  m_SleepThreshold: 5
+  m_SolverFrequency: 0.4
+  m_SleepThreshold: 0.4
   m_Coefficients:
   - maxDistance: 0
     collisionSphereDistance: 3.4028235e+38
@@ -2733,10 +2733,7 @@ Cloth:
   m_SelfCollisionDistance: 0
   m_SelfCollisionStiffness: 0.2
   m_SelfAndInterCollisionIndices: 
-  m_VirtualParticleWeights:
-  - {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-  - {x: 0.6666667, y: 0.16666667, z: 0.16666667}
-  - {x: 0.5, y: 0.5, z: 0}
+  m_VirtualParticleWeights: []
   m_VirtualParticleIndices: 
 --- !u!137 &280730565
 SkinnedMeshRenderer:
@@ -2970,8 +2967,8 @@ Cloth:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334606226}
   m_Enabled: 1
-  m_StretchingStiffness: 1
-  m_BendingStiffness: 1
+  m_StretchingStiffness: 0.5
+  m_BendingStiffness: 0.5
   m_UseTethers: 1
   m_UseGravity: 1
   m_Damping: 0
@@ -2983,8 +2980,8 @@ Cloth:
   m_CollisionMassScale: 0
   m_UseContinuousCollision: 1
   m_UseVirtualParticles: 1
-  m_SolverFrequency: 10
-  m_SleepThreshold: 5
+  m_SolverFrequency: 0.4
+  m_SleepThreshold: 0.4
   m_Coefficients:
   - maxDistance: 0
     collisionSphereDistance: 3.4028235e+38
@@ -5347,10 +5344,7 @@ Cloth:
   m_SelfCollisionDistance: 0
   m_SelfCollisionStiffness: 0.2
   m_SelfAndInterCollisionIndices: 
-  m_VirtualParticleWeights:
-  - {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-  - {x: 0.6666667, y: 0.16666667, z: 0.16666667}
-  - {x: 0.5, y: 0.5, z: 0}
+  m_VirtualParticleWeights: []
   m_VirtualParticleIndices: 
 --- !u!137 &334606228
 SkinnedMeshRenderer:
@@ -5541,8 +5535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 0.3137255}
-  outlineWidth: 6
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -5585,7 +5578,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.09028514, g: 0.011569957, b: 0.18867922, a: 1}
+  m_BackGroundColor: {r: 0.027701147, g: 0.0271004, b: 0.028301895, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -5635,7 +5628,7 @@ Transform:
   m_GameObject: {fileID: 504592544}
   serializedVersion: 2
   m_LocalRotation: {x: 0.078459114, y: 0, z: 0, w: 0.99691737}
-  m_LocalPosition: {x: 0, y: 1, z: -33}
+  m_LocalPosition: {x: 0, y: 2, z: -35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6915,7 +6908,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 5.52
   precomputeOutline: 1
   bakeKeys:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
@@ -9080,8 +9072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 0.3137255}
-  outlineWidth: 6
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []

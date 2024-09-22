@@ -176,11 +176,12 @@ public class MenuController : MonoBehaviour
 
     public void CreateMenu()
     {
-        Mesh[] meshes = Resources.LoadAll<Mesh>("Stages");
+        GameObject[] fbxFiles = Resources.LoadAll<GameObject>("Stages");
 
-        int totalCount = meshes.Length;
+        int totalCount = fbxFiles.Length;
         int i = 0;
-        foreach (Mesh mesh in meshes)
+
+        foreach(GameObject fbx in fbxFiles)
         {
             // Parent Menu Transform의 Z축에서 부터 시작
             angle = (i++ * Mathf.PI * 2 / totalCount) - Mathf.PI / 2;
@@ -191,15 +192,22 @@ public class MenuController : MonoBehaviour
             GameObject menuObject = Instantiate(prefab_MenuButton, object_ParentMenu.transform);
             menuObject.transform.position = new_position;
             menuObject.transform.LookAt(object_ParentMenu.transform);
-            menuObject.name = mesh.name; // string.Format("Menu Button {0}", i);
+            menuObject.name = fbx.name; // string.Format("Menu Button {0}", i);
 
             MenuObjectCom menuCom = menuObject.GetComponent<MenuObjectCom>();
-            menuCom.SetMeshData(mesh);
-            menuCom.SetMaterial(material_Hologram);
-            list_MenuObjects.Add(menuCom);
+            GameObject model = Instantiate(fbx, menuCom.transform);
 
+            // Setting OutLine & Material
+            for (int j = 0; j < model.transform.childCount; j++)
+            {
+                model.transform.GetChild(j).gameObject.AddComponent<Outline>();
+            }
+            menuCom.SetMaterial(material_Hologram);
+
+            list_MenuObjects.Add(menuCom);
             list_Capsule.Add(menuObject.GetComponent<CapsuleCollider>());
         }
+
         count_menu = totalCount;
 
         object_ClothLeft.capsuleColliders = list_Capsule.ToArray();

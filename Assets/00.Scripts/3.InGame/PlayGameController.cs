@@ -75,7 +75,7 @@ public class PlayGameController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             ray = component_cameraCom.camera_this.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out raycastHit, 100, layerMask))
+            if (Physics.Raycast(ray, out raycastHit, 1000, layerMask))
             {
                 if (raycastHit.transform.tag.Equals("Button"))
                 {
@@ -106,8 +106,8 @@ public class PlayGameController : MonoBehaviour
     public void CreateStageObjects()
     {
         // Get Stage Mesh
-        Mesh[] meshes = Resources.LoadAll<Mesh>("Stages");
-        Mesh mesh_Target = meshes[SingletonCom.Instance.curr_StageNum];
+        GameObject[] meshes = Resources.LoadAll<GameObject>("Stages");
+        GameObject mesh_Target = meshes[SingletonCom.Instance.curr_StageNum];
 
         // Set Stage Object
         GameObject menuObject = Instantiate(prefab_MenuButton); //, object_ParentMenu.transform
@@ -115,7 +115,14 @@ public class PlayGameController : MonoBehaviour
         menuObject.transform.rotation = Quaternion.Euler(Vector3.zero);
         menuObject.name = mesh_Target.name;
         MenuObjectCom menuCom = menuObject.GetComponent<MenuObjectCom>();
-        menuCom.SetMeshData(mesh_Target);
+
+        // Set OutLine
+        GameObject model = Instantiate(mesh_Target, menuCom.transform);
+        for (int i = 0; i < model.transform.childCount; i++)
+        {
+            model.transform.GetChild(i).gameObject.AddComponent<Outline>();
+        }
+
         list_MenuObjects.Add(menuCom);
 
         menuCom.SetRandomPoint();
@@ -144,8 +151,6 @@ public class PlayGameController : MonoBehaviour
             target.transform.DOMove(new Vector3(20, 1, -5), 1).OnComplete(() => StartCoroutine(DestroyTarget(target)));
             Debug.LogError("here! 1");
 
-            CreateStageObjects();
-
             // Floor Animation
             component_cameraCom.ObjectRotate_SetValue(object_ParentMenu.transform.up, -90);
         }
@@ -159,8 +164,6 @@ public class PlayGameController : MonoBehaviour
             GameObject target = stack_Object.Pop();
             target.transform.DOMove(new Vector3(0, 50, 20), 1).OnComplete(() => StartCoroutine(DestroyTarget(target)));
             Debug.LogError("here! 2");
-
-            CreateStageObjects();
 
             // Floor Animation
             //component_cameraCom.ObjectRotate_SetValue(object_ParentMenu.transform.up, 90);
@@ -176,10 +179,17 @@ public class PlayGameController : MonoBehaviour
 
         PinController.DeleteAllPinObjects();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
 
         target.SetActive(false);
         GameObject.Destroy(target);
+
+        yield return new WaitForSeconds(0.2f);
+
+        CreateStageObjects();
+
+        // Floor Animation
+        component_cameraCom.ObjectRotate_SetValue(object_ParentMenu.transform.up, -90);
 
         yield return null;
     }

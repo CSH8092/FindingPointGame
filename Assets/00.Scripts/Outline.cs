@@ -68,8 +68,8 @@ public class Outline : MonoBehaviour
     [SerializeField]
     private Color outlineColor = Color.white;
 
-    [SerializeField, Range(0f, 30f)]
-    private float outlineWidth = 2f;
+    //[SerializeField, Range(0f, 30f)]
+    private float outlineWidth = 0f;
 
     [Header("Optional")]
 
@@ -126,7 +126,8 @@ public class Outline : MonoBehaviour
 
     private void Start()
     {
-
+        outlineColor = new Color(255 / 255f, 255 / 255f, 255 / 255f, 100 / 255f);
+        this.enabled = false;
     }
 
     void OnValidate()
@@ -186,13 +187,25 @@ public class Outline : MonoBehaviour
     {
         if (!SingletonCom.Instance.isObservationMode)
         {
-            this.enabled = true;
+            foreach (Transform g in transform.GetComponentsInChildren<Transform>())
+            {
+                if(g.TryGetComponent<Outline>(out Outline outline))
+                {
+                    outline.enabled = true;
+                }
+            }
         }
     }
 
     private void OnMouseExit()
     {
-        this.enabled = false;
+        foreach (Transform g in transform.GetComponentsInChildren<Transform>())
+        {
+            if (g.TryGetComponent<Outline>(out Outline outline))
+            {
+                outline.enabled = false;
+            }
+        }
     }
 
     void Bake()

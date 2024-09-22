@@ -25,9 +25,9 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Exp: 0
+    - _Exp: 1.95
     m_Colors:
-    - _BottomColor: {r: 0.65605736, g: 0, b: 1, a: 0}
-    - _TopColor: {r: 0.2761659, g: 0.30668348, b: 0.5471698, a: 0}
-    - _Up: {r: 0, g: 0.3, b: 0.2, a: 0}
+    - _BottomColor: {r: 0, g: 0, b: 0, a: 0}
+    - _TopColor: {r: 1, g: 0.94397855, b: 0.8254717, a: 0}
+    - _Up: {r: 0, g: 0.2, b: 0.2, a: 0}
   m_BuildTextureStacks: []

@@ -46,7 +46,15 @@ public class MenuObjectCom : MonoBehaviour
 
     public void SetMaterial(Material newMaterial)
     {
-        renderer_this.material = newMaterial;
+        //renderer_this.material = newMaterial;
+
+        foreach (Transform g in transform.GetComponentsInChildren<Transform>())
+        {
+            if (g.TryGetComponent<MeshRenderer>(out MeshRenderer material))
+            {
+                material.material = newMaterial;
+            }
+        }
     }
 
     public void SetHighlight(bool isOn)

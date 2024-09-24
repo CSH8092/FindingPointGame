@@ -34,9 +34,9 @@ public class PlayGameController : MonoBehaviour
     public Button button_BackToLobby;
 
     // Values
-    List<MenuObjectCom> list_MenuObjects = new List<MenuObjectCom>();
     List<CapsuleCollider> list_Capsule = new List<CapsuleCollider>();
-    Stack<GameObject> stack_Object = new Stack<GameObject>();
+    Stack<IObject> stack_Object = new Stack<IObject>();
+    GameObject[] meshes;
 
     Ray ray;
     RaycastHit raycastHit;
@@ -54,6 +54,7 @@ public class PlayGameController : MonoBehaviour
         skyboxMaterial = RenderSettings.skybox;
         layerMask = LayerMask.GetMask("ButtonObject");
 
+        LoadData();
         StartStageGame();
     }
 
@@ -63,6 +64,12 @@ public class PlayGameController : MonoBehaviour
         {
             ClickMenuChangeButton();
         }
+    }
+
+    void LoadData()
+    {
+        // Get Stage Mesh
+        meshes = Resources.LoadAll<GameObject>("Stages");
     }
 
     void BackToLobby()
@@ -106,36 +113,25 @@ public class PlayGameController : MonoBehaviour
     public void CreateStageObjects()
     {
         // Get Stage Mesh
-        GameObject[] meshes = Resources.LoadAll<GameObject>("Stages");
         GameObject mesh_Target = meshes[SingletonCom.Instance.curr_StageNum];
 
-        // Set Stage Object
-        GameObject menuObject = Instantiate(prefab_MenuButton); //, object_ParentMenu.transform
-        menuObject.transform.position = new Vector3(-20, 1, -5);
-        menuObject.transform.rotation = Quaternion.Euler(Vector3.zero);
-        menuObject.name = mesh_Target.name;
-        MenuObjectCom menuCom = menuObject.GetComponent<MenuObjectCom>();
+        // Create Object
+        Factory.ObjectType type = Factory.ObjectType.pudding;
+        IObject objectTarget = Factory.CreateObject(type, mesh_Target);
+        stack_Object.Push(objectTarget);
 
-        // Set OutLine
-        GameObject model = Instantiate(mesh_Target, menuCom.transform);
-        for (int i = 0; i < model.transform.childCount; i++)
-        {
-            model.transform.GetChild(i).gameObject.AddComponent<Outline>();
-        }
+        // Init & Move Object Data
+        GameObject tmp = stack_Object.Peek().Object_Target;
+        tmp.transform.position = new Vector3(-20, 1, -5);
+        tmp.transform.rotation = Quaternion.Euler(Vector3.zero);
+        tmp.transform.DOMove(new Vector3(0, 1, -20), 1);
 
-        list_MenuObjects.Add(menuCom);
-
-        menuCom.SetRandomPoint();
-
+        /* Cloths´Â Æó±â, ³ªÁß¿¡ ¹Ì´ÝÀÌ¹® Ãß°¡ ¿¹Á¤
         // Set Cloths Collider
         list_Capsule.Add(menuObject.GetComponent<CapsuleCollider>());
         object_ClothLeft.capsuleColliders = list_Capsule.ToArray();
         object_ClothRight.capsuleColliders = list_Capsule.ToArray();
-
-        // Save Object Data
-        stack_Object.Push(menuObject);
-
-        stack_Object.Peek().transform.DOMove(new Vector3(0, 1, -20), 1);
+        */
     }
 
     void ClickFieldButton(bool isRight)
@@ -147,9 +143,9 @@ public class PlayGameController : MonoBehaviour
             sequence.Append(object_RightButton.transform.DOLocalMoveY(0.42f, 0.2f).SetEase(Ease.InSine));
 
             // Control Object
-            GameObject target = stack_Object.Pop();
+            Debug.LogError("Á¦ÃâµÊ! : " + string.Join(',', stack_Object.Peek().array_diffPoint));
+            GameObject target = stack_Object.Pop().Object_Target;
             target.transform.DOMove(new Vector3(20, 1, -5), 1).OnComplete(() => StartCoroutine(DestroyTarget(target)));
-            Debug.LogError("here! 1");
 
             // Floor Animation
             component_cameraCom.ObjectRotate_SetValue(object_ParentMenu.transform.up, -90);
@@ -161,9 +157,9 @@ public class PlayGameController : MonoBehaviour
             sequence.Append(object_LeftButton.transform.DOLocalMoveY(0.42f, 0.2f).SetEase(Ease.InSine));
 
             // Control Object
-            GameObject target = stack_Object.Pop();
+            GameObject target = stack_Object.Pop().Object_Target;
             target.transform.DOMove(new Vector3(0, 50, 20), 1).OnComplete(() => StartCoroutine(DestroyTarget(target)));
-            Debug.LogError("here! 2");
+            Debug.LogError("Æó±âµÊ!");
 
             // Floor Animation
             //component_cameraCom.ObjectRotate_SetValue(object_ParentMenu.transform.up, 90);
@@ -172,10 +168,12 @@ public class PlayGameController : MonoBehaviour
 
     IEnumerator DestroyTarget(GameObject target)
     {
+        /* Cloths´Â Æó±â, ³ªÁß¿¡ ¹Ì´ÝÀÌ¹® Ãß°¡ ¿¹Á¤
         // Set Cloths Collider
         list_Capsule.RemoveAt(0);
         object_ClothLeft.capsuleColliders = list_Capsule.ToArray();
         object_ClothRight.capsuleColliders = list_Capsule.ToArray();
+        */
 
         PinController.DeleteAllPinObjects();
 

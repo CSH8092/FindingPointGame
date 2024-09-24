@@ -71,16 +71,21 @@ public class ObjectController : MonoBehaviour
         object_OriginPos = object_TargetObject.transform.position;
         object_OriginRot = object_TargetObject.transform.localRotation;
 
+        GameObject object_mesh = object_TargetObject;
+        if (object_TargetObject.transform.childCount > 0)
+        {
+            object_mesh = object_TargetObject.transform.GetChild(0).gameObject;
+        }
+
         // Turn Off OutLine & Set Target Object Layer
-        GameObject object_mesh = object_TargetObject.transform.GetChild(0).gameObject;
+        if (object_Target.TryGetComponent<Outline>(out Outline outline))
+        {
+            outline.enabled = false;
+        }
         object_mesh.layer = 7;
         for (int i = 0; i < object_mesh.transform.childCount; i++)
         {
-            object_mesh.transform.GetChild(i).gameObject.AddComponent<Outline>();
             object_mesh.transform.GetChild(i).gameObject.layer = 7;
-
-            // Set Collider
-            object_mesh.transform.GetChild(i).gameObject.AddComponent<MeshCollider>();
         }
 
         // Set Target Object Position
@@ -101,8 +106,13 @@ public class ObjectController : MonoBehaviour
 
     void EndObservationMode()
     {
+        GameObject object_mesh = object_TargetObject;
+        if (object_TargetObject.transform.childCount > 0)
+        {
+            object_mesh = object_TargetObject.transform.GetChild(0).gameObject;
+        }
+
         // Set Target Object Layer
-        GameObject object_mesh = object_TargetObject.transform.GetChild(0).gameObject;
         object_mesh.layer = 9;
         for (int i = 0; i < object_mesh.transform.childCount; i++)
         {

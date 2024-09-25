@@ -197,12 +197,17 @@ public class MenuController : MonoBehaviour
             MenuObjectCom menuCom = menuObject.GetComponent<MenuObjectCom>();
             GameObject model = Instantiate(fbx, menuCom.transform);
 
+            if(model.TryGetComponent<ObjectHandler>(out ObjectHandler handler))
+            {
+                menuCom.objectHandler = handler;
+            }
+
             // Setting OutLine & Material
             for (int j = 0; j < model.transform.childCount; j++)
             {
                 model.transform.GetChild(j).gameObject.AddComponent<Outline>();
             }
-            menuCom.SetMaterial(material_Hologram);
+            //menuCom.SetMaterial(material_Hologram);
 
             list_MenuObjects.Add(menuCom);
             list_Capsule.Add(menuObject.GetComponent<CapsuleCollider>());

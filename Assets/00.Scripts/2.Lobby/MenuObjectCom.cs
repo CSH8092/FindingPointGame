@@ -2,28 +2,34 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
 public class MenuObjectCom : MonoBehaviour
 {
     // Mesh
     public MeshFilter mesh_this;
-    public MeshRenderer renderer_this;
-    public MeshCollider collider_this;  
+    //public MeshRenderer renderer_this;
+    //public MeshCollider collider_this;  
 
-    // Set Animation Value
-    [SerializeField]
-    float time_playTime = 0.8f;
+    // Components
+    public ObjectHandler objectHandler { get; set; }
+
+    // Values
     [SerializeField]
     float float_rotationSpeed = 50f;
+
+    // Set Animation Value
+    float time_playTime = 1f;
     [SerializeField]
     Vector3 scale_highlight = new Vector3(1.3f, 1.3f, 1.3f);
 
 
     void Start()
     {
-
+        this.transform.localScale = scale_highlight;
     }
 
     void Update()
@@ -46,7 +52,12 @@ public class MenuObjectCom : MonoBehaviour
     {
         if (isOn)
         {
-            transform.DOScale(scale_highlight, time_playTime).SetEase(Ease.OutElastic);
+            this.transform.localScale = scale_highlight;
+            transform.DOShakeScale(time_playTime).SetEase(Ease.OutElastic);
+            objectHandler?.DoFadeIn();
+
+            //Action action = () => transform.DOScale(scale_highlight, time_playTime).SetEase(Ease.OutElastic);
+            //objectHandler?.DoFadeIn(action);
         }
         else
         {

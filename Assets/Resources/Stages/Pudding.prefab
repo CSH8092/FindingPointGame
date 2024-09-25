@@ -139,10 +139,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5324764618255632422, guid: c92df61fbbd5128458b47240b4655b4b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 495af943343c86d4b883e0614dd5cd05, type: 2}
     - target: {fileID: -2804699722735378873, guid: c92df61fbbd5128458b47240b4655b4b, type: 3}
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: -1860699757152928507, guid: c92df61fbbd5128458b47240b4655b4b, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1860699757152928507, guid: c92df61fbbd5128458b47240b4655b4b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7c12da26aec97d64f986c7b90c1e2b8d, type: 2}
     - target: {fileID: 919132149155446097, guid: c92df61fbbd5128458b47240b4655b4b, type: 3}
       propertyPath: m_Name
       value: 0.Pudding
@@ -151,6 +163,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 2339837929447076565, guid: c92df61fbbd5128458b47240b4655b4b, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2339837929447076565, guid: c92df61fbbd5128458b47240b4655b4b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 10104e94330cfc241a1ae1ff58f17eba, type: 2}
     - target: {fileID: 5796711127622769144, guid: c92df61fbbd5128458b47240b4655b4b, type: 3}
       propertyPath: m_Layer
       value: 9

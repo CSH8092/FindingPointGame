@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -122,9 +123,10 @@ public class PlayGameController : MonoBehaviour
 
         // Init & Move Object Data
         GameObject tmp = stack_Object.Peek().Object_Target;
-        tmp.transform.position = new Vector3(-20, 1, -5);
+        tmp.transform.position = new Vector3(0, 1, -20);
         tmp.transform.rotation = Quaternion.Euler(Vector3.zero);
-        tmp.transform.DOMove(new Vector3(0, 1, -20), 1);
+        //tmp.transform.position = new Vector3(-20, 1, -5);
+        //tmp.transform.DOMove(new Vector3(0, 1, -20), 1);
 
         /* Cloths´Â Æó±â, ³ªÁß¿¡ ¹Ì´ÝÀÌ¹® Ãß°¡ ¿¹Á¤
         // Set Cloths Collider
@@ -157,12 +159,13 @@ public class PlayGameController : MonoBehaviour
             sequence.Append(object_LeftButton.transform.DOLocalMoveY(0.42f, 0.2f).SetEase(Ease.InSine));
 
             // Control Object
-            GameObject target = stack_Object.Pop().Object_Target;
-            target.transform.DOMove(new Vector3(0, 50, 20), 1).OnComplete(() => StartCoroutine(DestroyTarget(target)));
-            Debug.LogError("Æó±âµÊ!");
+            GameObject target = stack_Object.Peek().Object_Target;
+            Action destroyAction = () => StartCoroutine(DestroyTarget(target));
 
-            // Floor Animation
-            //component_cameraCom.ObjectRotate_SetValue(object_ParentMenu.transform.up, 90);
+            stack_Object.Peek().FadeInOut(false, destroyAction);
+            stack_Object.Pop();
+
+            Debug.LogError("Æó±âµÊ!");
         }
     }
 

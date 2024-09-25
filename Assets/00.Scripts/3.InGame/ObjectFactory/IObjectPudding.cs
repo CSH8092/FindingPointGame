@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Random = System.Random;
 
@@ -13,7 +14,7 @@ public class IObjectPudding : MonoBehaviour, IObject
         SetRandomPoint(10);
     }
 
-    public void SetRandomPoint(int percent)
+    void SetRandomPoint(int percent)
     {
         array_diffPoint = new int[5] { 0, 0, 0, 0, 0 };
 
@@ -79,6 +80,18 @@ public class IObjectPudding : MonoBehaviour, IObject
         catch
         {
             Debug.LogErrorFormat("{0} Data에 Object Handler가 존재하지 않습니다.", data.name);
+        }
+    }
+
+    public void FadeInOut(bool fadeIn, Action event_end)
+    {
+        if (fadeIn)
+        {
+            ObjectHandler.DoFadeIn(event_end);
+        }
+        else
+        {
+            ObjectHandler.DoFadeOut(event_end);
         }
     }
 }

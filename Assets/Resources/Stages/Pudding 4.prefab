@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1644866584251399837}
   - component: {fileID: 324439549460042334}
   m_Layer: 9
-  m_Name: Pudding 2
+  m_Name: Pudding 4
   m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

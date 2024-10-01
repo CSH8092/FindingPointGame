@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
+using Random = UnityEngine.Random;
 
 public class ObjectHandler : MonoBehaviour
 {
@@ -15,6 +15,9 @@ public class ObjectHandler : MonoBehaviour
 
     [SerializeField]
     List<Material> list_material = new List<Material>();
+
+    [SerializeField]
+    List<Material> list_rendomMaterial = new List<Material>();
 
     public int count_Parts { get; set; }
 
@@ -57,7 +60,7 @@ public class ObjectHandler : MonoBehaviour
                 DOTween.To(
                     () => list_material[index].GetFloat("_Split_Value"),
                     x => list_material[index].SetFloat("_Split_Value", x),
-                    5f,
+                    10f,
                     fadeTime
                 ).SetEase(Ease.InCubic)
             );
@@ -76,7 +79,7 @@ public class ObjectHandler : MonoBehaviour
             int index = i;
 
             // value init
-            list_material[index].SetFloat("_Split_Value", 5f);
+            list_material[index].SetFloat("_Split_Value", 10f);
 
             // animation start
             sequence.Join(
@@ -91,5 +94,16 @@ public class ObjectHandler : MonoBehaviour
 
         // for loop end
         sequence.OnComplete(() => endEvent?.Invoke());
+    }
+
+    public void ChangeColorRandom(int partIndex)
+    {
+        if (partIndex > object_Parts.Length || list_rendomMaterial.Count == 0)
+        {
+            return;
+        }
+
+        int randomIndex = Random.Range(0, list_rendomMaterial.Count);
+        object_Parts[partIndex].GetComponent<MeshRenderer>().material = list_rendomMaterial[randomIndex];
     }
 }

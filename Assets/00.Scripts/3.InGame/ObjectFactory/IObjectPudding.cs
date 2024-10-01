@@ -41,17 +41,20 @@ public class IObjectPudding : MonoBehaviour, IObject
                 ObjectHandler.object_Parts[0].SetActive(false);
                 break;
             case 1:
-                // 푸딩 색 다름
+                // 체리 회전
+                ObjectHandler.object_Parts[0].transform.localRotation = Quaternion.Euler(-90, 0, 180);
                 break;
             case 2:
                 // 크림 색 다름
+                ObjectHandler.ChangeColorRandom(1);
                 break;
             case 3:
-                // 푸딩이 커짐
-                ObjectHandler.gameObject.transform.localScale *= 1.3f;
+                // 푸딩 색 다름
+                ObjectHandler.ChangeColorRandom(2);
                 break;
             case 4:
-                // 누군가 한입 베어 뭄
+                // 푸딩이 커짐
+                ObjectHandler.gameObject.transform.localScale *= 1.3f;
                 break;
             default:
                 break;

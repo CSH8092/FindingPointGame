@@ -27,12 +27,10 @@ public class PlayGameController : MonoBehaviour
 
     // Components
     [Header("Components")]
+    public UIController component_uiController;
     public ObjectController component_objectController;
     public CameraCom component_cameraCom;
     SingletonCom sc;
-
-    [Header("UI")]
-    public Button button_BackToLobby;
 
     // Values
     List<CapsuleCollider> list_Capsule = new List<CapsuleCollider>();
@@ -46,8 +44,6 @@ public class PlayGameController : MonoBehaviour
     private void Awake()
     {
         sc = SingletonCom.Instance;
-
-        button_BackToLobby.onClick.AddListener(() => BackToLobby());
     }
 
     void Start()
@@ -71,11 +67,6 @@ public class PlayGameController : MonoBehaviour
     {
         // Get Stage Mesh
         meshes = Resources.LoadAll<GameObject>("Stages");
-    }
-
-    void BackToLobby()
-    {
-        SceneLoader.Instance.LoadSceneByName("02.Lobby");
     }
 
     void ClickMenuChangeButton()
@@ -113,6 +104,8 @@ public class PlayGameController : MonoBehaviour
 
     public void CreateStageObjects()
     {
+        component_uiController.InitToggleCheck();
+
         // Get Stage Mesh
         GameObject mesh_Target = meshes[SingletonCom.Instance.curr_StageNum];
 
@@ -178,7 +171,7 @@ public class PlayGameController : MonoBehaviour
         object_ClothRight.capsuleColliders = list_Capsule.ToArray();
         */
 
-        PinController.DeleteAllPinObjects();
+        ///PinController.DeleteAllPinObjects();
 
         yield return new WaitForSeconds(0.2f);
 

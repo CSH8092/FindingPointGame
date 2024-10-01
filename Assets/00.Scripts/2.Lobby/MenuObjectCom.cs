@@ -53,11 +53,8 @@ public class MenuObjectCom : MonoBehaviour
         if (isOn)
         {
             this.transform.localScale = scale_highlight;
-            transform.DOShakeScale(time_playTime).SetEase(Ease.OutElastic);
-            objectHandler?.DoFadeIn();
-
-            //Action action = () => transform.DOScale(scale_highlight, time_playTime).SetEase(Ease.OutElastic);
-            //objectHandler?.DoFadeIn(action);
+            transform.DOShakeScale(time_playTime, 0.5f).SetEase(Ease.OutElastic);
+            ///objectHandler?.DoFadeIn(); // 일단 보류
         }
         else
         {

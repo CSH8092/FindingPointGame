@@ -8,6 +8,9 @@ public class Factory : MonoBehaviour
     {
         pudding,
         donut,
+        pencil,
+        berry,
+
     }
 
     public static IObject CreateObject(ObjectType type, GameObject data)
@@ -17,7 +20,11 @@ public class Factory : MonoBehaviour
             case ObjectType.pudding:
                 return new IObjectPudding(data);
             case ObjectType.donut:
-                return new IObjectPudding(data);
+                return new IObjectDonut(data);
+            case ObjectType.pencil:
+                return new IObjectPencil(data);
+            case ObjectType.berry:
+                return new IObjectBerry(data);
             default:
                 return new IObjectPudding(data);
         }

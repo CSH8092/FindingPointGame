@@ -55,6 +55,7 @@ MonoBehaviour:
   - {fileID: 5477586893380290886}
   - {fileID: 2068752646806867038}
   list_material: []
+  list_rendomMaterial: []
 --- !u!136 &1644866584251399837
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -109,7 +110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7c86843003f630c44aa28fe4f49f3ba5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7c86843003f630c44aa28fe4f49f3ba5, type: 3}
       propertyPath: m_LocalPosition.z

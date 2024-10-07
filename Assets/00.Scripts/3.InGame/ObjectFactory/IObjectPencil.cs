@@ -2,15 +2,15 @@ using System;
 using UnityEngine;
 using Random = System.Random;
 
-public class IObjectPudding : MonoBehaviour, IObject
+public class IObjectPencil : MonoBehaviour, IObject
 {
     public int[] array_diffPoint { get; set; }
     public GameObject Object_Target { get; set; }
     public ObjectHandler ObjectHandler { get; set; }
 
-    public IObjectPudding(GameObject data)
+    public IObjectPencil(GameObject data)
     {
-        SetMeshData(data); 
+        SetMeshData(data);
         SetRandomPoint(10);
     }
 
@@ -29,7 +29,7 @@ public class IObjectPudding : MonoBehaviour, IObject
             }
         }
 
-        //Debug.LogFormat("Set {0} {1} {2} {3} {4}", array_diffPoint[0], array_diffPoint[1], array_diffPoint[2], array_diffPoint[3], array_diffPoint[4]);
+        Debug.LogFormat("Set {0} {1} {2} {3} {4}", array_diffPoint[0], array_diffPoint[1], array_diffPoint[2], array_diffPoint[3], array_diffPoint[4]);
     }
 
     void MakeDiffPoint(int caseNum)
@@ -37,23 +37,23 @@ public class IObjectPudding : MonoBehaviour, IObject
         switch (caseNum)
         {
             case 0:
-                // Ã¼¸® ¼û°ÜÁü
-                ObjectHandler.object_Parts[0].SetActive(false);
+                // µµ³Ó Å©¸² ¼û°ÜÁü
+                ObjectHandler.object_Parts[1].SetActive(false);
                 break;
             case 1:
-                // Ã¼¸® È¸Àü
-                ObjectHandler.object_Parts[0].transform.localRotation = Quaternion.Euler(-90, 0, 180);
+                // µµ³Ó Å©¸² È¸Àü
+                ObjectHandler.object_Parts[1].transform.localRotation = Quaternion.Euler(-90, 0, 180);
                 break;
             case 2:
+                // »§ »ö ´Ù¸§
+                ObjectHandler.ChangeColorRandom(0);
+                break;
+            case 3:
                 // Å©¸² »ö ´Ù¸§
                 ObjectHandler.ChangeColorRandom(1);
                 break;
-            case 3:
-                // Çªµù »ö ´Ù¸§
-                ObjectHandler.ChangeColorRandom(2);
-                break;
             case 4:
-                // ÇªµùÀÌ Ä¿Áü
+                // µµ³ÓÀÌ Ä¿Áü
                 ObjectHandler.gameObject.transform.localScale *= 1.3f;
                 break;
             default:
@@ -98,4 +98,3 @@ public class IObjectPudding : MonoBehaviour, IObject
         }
     }
 }
-

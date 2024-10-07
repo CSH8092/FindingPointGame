@@ -11,6 +11,7 @@ public class PlayGameController : MonoBehaviour
 {
     [Header("Target Object")]
     Material skyboxMaterial;
+    public GameObject object_Answer;
     public GameObject object_ParentMenu;
     public GameObject prefab_MenuButton;
     public Cloth object_ClothLeft;
@@ -40,6 +41,10 @@ public class PlayGameController : MonoBehaviour
     Ray ray;
     RaycastHit raycastHit;
     int layerMask;
+
+    // Game Controllers
+    int count_AllNum = 10; // 30개로 일단 고정
+    int count_AllWrong = 3; // 3개로 고정
 
     private void Awake()
     {
@@ -99,6 +104,10 @@ public class PlayGameController : MonoBehaviour
     void StartStageGame()
     {
         Debug.Log("Start In Game Scene, " + SingletonCom.Instance.curr_StageNum);
+
+        // Setting UI
+        component_uiController.InitUI(count_AllNum, count_AllWrong);
+
         CreateStageObjects();
     }
 
@@ -107,10 +116,20 @@ public class PlayGameController : MonoBehaviour
         component_uiController.InitToggleCheck();
 
         // Get Stage Mesh
-        GameObject mesh_Target = meshes[SingletonCom.Instance.curr_StageNum];
+        int currentStageIndex = SingletonCom.Instance.curr_StageNum;
+
+//#if UNITY_EDITOR
+//        // donut test
+//        currentStageIndex = 1;
+//#endif
+
+        GameObject mesh_Target = meshes[currentStageIndex];
+
+        // Show Sample
+        Instantiate(mesh_Target, object_Answer.transform);
 
         // Create Object
-        Factory.ObjectType type = Factory.ObjectType.pudding;
+        Factory.ObjectType type = (Factory.ObjectType)currentStageIndex; // Factory.ObjectType.pudding;
         IObject objectTarget = Factory.CreateObject(type, mesh_Target);
         stack_Object.Push(objectTarget);
 
@@ -138,7 +157,7 @@ public class PlayGameController : MonoBehaviour
             sequence.Append(object_RightButton.transform.DOLocalMoveY(0.42f, 0.2f).SetEase(Ease.InSine));
 
             // Control Object
-            Debug.LogError("제출됨! : " + string.Join(',', stack_Object.Peek().array_diffPoint));
+            SendAnswer(stack_Object.Peek().array_diffPoint);
             GameObject target = stack_Object.Pop().Object_Target;
             target.transform.DOMove(new Vector3(20, 1, -5), 1).OnComplete(() => StartCoroutine(DestroyTarget(target)));
 
@@ -147,18 +166,60 @@ public class PlayGameController : MonoBehaviour
         }
         else
         {
-            Sequence sequence = DOTween.Sequence();
-            sequence.Append(object_LeftButton.transform.DOLocalMoveY(0.26f, 0.2f).SetEase(Ease.InSine));
-            sequence.Append(object_LeftButton.transform.DOLocalMoveY(0.42f, 0.2f).SetEase(Ease.InSine));
+            if (component_uiController.AddCountPass())
+            {
+                Sequence sequence = DOTween.Sequence();
+                sequence.Append(object_LeftButton.transform.DOLocalMoveY(0.26f, 0.2f).SetEase(Ease.InSine));
+                sequence.Append(object_LeftButton.transform.DOLocalMoveY(0.42f, 0.2f).SetEase(Ease.InSine));
 
-            // Control Object
-            GameObject target = stack_Object.Peek().Object_Target;
-            Action destroyAction = () => StartCoroutine(DestroyTarget(target));
+                // Control Object
+                GameObject target = stack_Object.Peek().Object_Target;
+                Action destroyAction = () => StartCoroutine(DestroyTarget(target));
 
-            stack_Object.Peek().FadeInOut(false, destroyAction);
-            stack_Object.Pop();
+                stack_Object.Peek().FadeInOut(false, destroyAction);
+                stack_Object.Pop();
 
-            Debug.LogError("폐기됨!");
+                Debug.LogFormat("<color=yellow>패스!</color>");
+            }
+            else
+            {
+                component_uiController.AddCountSlider_W(); // 임시
+                Debug.LogFormat("<color=red>패스 횟수 초과!</color>");
+            }
+        }
+    }
+
+    void SendAnswer(int[] answer)
+    {
+        // 답변 제출 및 비교 & 결과 도출
+        int[] submit = component_uiController.GetToggleCheck();
+
+        bool result = true;
+        for(int i = 0; i < answer.Length; i++)
+        {
+            if (!answer[i].Equals(submit[i]))
+            {
+                result = false;
+            }
+        }
+
+        Debug.Log("비교 결과 (answer, submit) : \n" + string.Join(',', answer) + " || " + string.Join(',', submit));
+
+        if (result)
+        {
+            Debug.LogFormat("<color=green>맞췄습니다!</color>");
+            if (component_uiController.AddCountSlider_A())
+            {
+                Debug.LogError("게임 종료");
+            }
+        }
+        else
+        {
+            Debug.LogFormat("<color=red>틀렸습니다!</color>");
+            if (component_uiController.AddCountSlider_W())
+            {
+                Debug.LogError("게임 종료");
+            }
         }
     }
 
@@ -173,12 +234,12 @@ public class PlayGameController : MonoBehaviour
 
         ///PinController.DeleteAllPinObjects();
 
-        yield return new WaitForSeconds(0.2f);
+        //yield return new WaitForSeconds(0.1f);
 
         target.SetActive(false);
         GameObject.Destroy(target);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
 
         CreateStageObjects();
 

@@ -1,3 +1,34 @@
 key,val1,val2
-0,start,시작
-1,exit,종료
+0,Start,시작
+1,Exit,종료
+2,Welcome!,환영합니다!
+3,Warning!,경고!
+4,Yes,예
+5,No,아니오
+6,Cancel,취소
+7,Congratulations!,축하합니다!
+8,Too bad!,아쉽습니다!
+9,Let's start working now. Please find differences in the target model.,지금부터 작업을 시작합니다. 타겟 모델의 다른점을 찾아주세요.
+10,Number of passes exceeded.,패스 횟수가 초과되었습니다.
+11,You have passed the inspection process.,검사 과정을 통과하였습니다.
+12,Failed to pass the inspection process.,검사 과정 통과에 실패하였습니다.
+13,No cherries,체리가 없음
+14,Cherry shapes are different,체리 모양이 다름
+15,Different cream colors,크림 색상이 다름
+16,Different pudding colors,푸딩 색상이 다름
+17,Different pudding sizes,푸딩 크기가 다름
+18,No donut cream,도넛 크림이 없음
+19,Donut cream has different shapes,도넛 크림 모양이 다름
+20,Bread color is different,빵 색상이 다름
+21,Donut cream colors are different,도넛 크림 색상이 다름
+22,Donut sizes are different,도넛 크기가 다름
+23,pencil1,연필1
+24,pencil2,연필2
+25,pencil3,연필3
+26,pencil4,연필4
+27,pencil5,연필5
+28,berry1,베리1
+29,berry2,베리2
+30,berry3,베리3
+31,berry4,베리4
+32,berry5,베리5

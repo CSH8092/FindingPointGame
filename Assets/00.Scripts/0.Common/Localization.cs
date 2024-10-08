@@ -23,7 +23,7 @@ public class Localization : MonoBehaviour
 
     private void Awake()
     {
-        curr_language = CurrentLanguage.KOREAN;
+        curr_language = CurrentLanguage.ENGLISH;
     }
 
     void Start()
@@ -66,17 +66,17 @@ public class Localization : MonoBehaviour
 #endif
     }
 
-    public static string GetStringByString(string target, string originString = "")
+    public static string GetStringByString(string target)
     {
 #if UNITY_EDITOR
-        curr_language = CurrentLanguage.KOREAN; // test
+        curr_language = CurrentLanguage.ENGLISH; // test
         if (table_Languages.Count == 0)
         {
             ReadLanguageTable();
         }
 #endif
 
-        string result = originString;
+        string result = target;
         LanguageString value;
 
         foreach (var entry in table_Languages)
@@ -109,7 +109,7 @@ public class Localization : MonoBehaviour
     public static string GetStringByKey(string key, string originString = "")
     {
 #if UNITY_EDITOR
-        curr_language = CurrentLanguage.KOREAN; // test
+        curr_language = CurrentLanguage.ENGLISH; // test
         if (table_Languages.Count == 0)
         {
             ReadLanguageTable();

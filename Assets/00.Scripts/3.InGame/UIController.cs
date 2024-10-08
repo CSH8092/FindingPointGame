@@ -151,10 +151,33 @@ public class UIController : MonoBehaviour
 
     void SetStageMessage()
     {
-        //SingletonCom.Instance.curr_StageNum
+        Factory.ObjectType type = (Factory.ObjectType)SingletonCom.Instance.curr_StageNum;
+
+        int stringkey = 0;
+        switch (type)
+        {
+            case Factory.ObjectType.pudding:
+                stringkey = 13;
+                break;
+            case Factory.ObjectType.donut:
+                stringkey = 18;
+                break;
+            case Factory.ObjectType.pencil:
+                stringkey = 23;
+                break;
+            case Factory.ObjectType.berry:
+                stringkey = 28;
+                break;
+            default:
+                return;
+        }
+
+        string string_read = "";
         for (int i = 0; i < text_list.Length; i++)
         {
-            text_list[i].text = "message sample " + i;
+            string_read = Localization.GetStringByKey(stringkey.ToString(),"[error]");
+            text_list[i].text = string_read;
+            stringkey++;
         }
     }
 }

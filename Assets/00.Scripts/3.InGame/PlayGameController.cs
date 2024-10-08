@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static ModalManager;
 
 public class PlayGameController : MonoBehaviour
 {
@@ -43,8 +44,10 @@ public class PlayGameController : MonoBehaviour
     int layerMask;
 
     // Game Controllers
-    int count_AllNum = 10; // 30개로 일단 고정
+    int count_AllNum = 3; // 30개로 일단 고정
     int count_AllWrong = 3; // 3개로 고정
+
+    bool flag_wait = false;
 
     private void Awake()
     {
@@ -105,9 +108,14 @@ public class PlayGameController : MonoBehaviour
     {
         Debug.Log("Start In Game Scene, " + SingletonCom.Instance.curr_StageNum);
 
+        ButtonSet[] set = new ButtonSet[] { new ButtonSet("Start", SettingStartObjects) };
+        ModalManager.Instance.ShowModal("2", "9", set);
+    }
+
+    void SettingStartObjects()
+    {
         // Setting UI
         component_uiController.InitUI(count_AllNum, count_AllWrong);
-
         CreateStageObjects();
     }
 
@@ -146,10 +154,19 @@ public class PlayGameController : MonoBehaviour
         object_ClothLeft.capsuleColliders = list_Capsule.ToArray();
         object_ClothRight.capsuleColliders = list_Capsule.ToArray();
         */
+
+        flag_wait = false;
     }
 
     void ClickFieldButton(bool isRight)
     {
+        if (flag_wait)
+        {
+            return;
+        }
+
+        flag_wait = true;
+
         if (isRight)
         {
             Sequence sequence = DOTween.Sequence();
@@ -183,8 +200,10 @@ public class PlayGameController : MonoBehaviour
             }
             else
             {
-                component_uiController.AddCountSlider_W(); // 임시
                 Debug.LogFormat("<color=red>패스 횟수 초과!</color>");
+
+                ButtonSet[] set = new ButtonSet[] { new ButtonSet("Ok", null) };
+                ModalManager.Instance.ShowModal("3", "10", set);
             }
         }
     }
@@ -210,7 +229,10 @@ public class PlayGameController : MonoBehaviour
             Debug.LogFormat("<color=green>맞췄습니다!</color>");
             if (component_uiController.AddCountSlider_A())
             {
-                Debug.LogError("게임 종료");
+                Debug.LogFormat("<color=cyan>게임 종료</color>");
+
+                ButtonSet[] set = new ButtonSet[] { new ButtonSet("Ok", EndGameStage) };
+                ModalManager.Instance.ShowModal("7", "11", set);
             }
         }
         else
@@ -218,9 +240,17 @@ public class PlayGameController : MonoBehaviour
             Debug.LogFormat("<color=red>틀렸습니다!</color>");
             if (component_uiController.AddCountSlider_W())
             {
-                Debug.LogError("게임 종료");
+                Debug.LogFormat("<color=cyan>게임 종료</color>");
+
+                ButtonSet[] set = new ButtonSet[] { new ButtonSet("Ok", EndGameStage) };
+                ModalManager.Instance.ShowModal("8", "12", set);
             }
         }
+    }
+
+    void EndGameStage()
+    {
+        component_uiController.button_BackToLobby.onClick.Invoke();
     }
 
     IEnumerator DestroyTarget(GameObject target)

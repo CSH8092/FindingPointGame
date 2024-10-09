@@ -77,11 +77,13 @@ public class ObjectController : MonoBehaviour
             object_mesh = object_TargetObject.transform.GetChild(0).gameObject;
         }
 
-        // Turn Off OutLine & Set Target Object Layer
-        if (object_Target.TryGetComponent<Outline>(out Outline outline))
-        {
-            outline.enabled = false;
-        }
+        // Turn Off OutLine
+        //if (object_Target.TryGetComponent<Outline>(out Outline outline))
+        //{
+        //    outline.enabled = false;
+        //}
+
+        // Set Target Object Layer
         object_mesh.layer = 7;
         for (int i = 0; i < object_mesh.transform.childCount; i++)
         {
@@ -106,6 +108,8 @@ public class ObjectController : MonoBehaviour
 
     void EndObservationMode()
     {
+        Debug.Log("End Observation Mode");
+
         GameObject object_mesh = object_TargetObject;
         if (object_TargetObject.transform.childCount > 0)
         {

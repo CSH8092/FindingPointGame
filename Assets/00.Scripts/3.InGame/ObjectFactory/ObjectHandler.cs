@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class ObjectHandler : MonoBehaviour
 {
     [SerializeField]
-    float fadeTime = 1.5f;
+    float fadeTime = 3f;
 
     [SerializeField]
     public GameObject[] object_Parts;
@@ -62,7 +62,7 @@ public class ObjectHandler : MonoBehaviour
                     x => list_material[index].SetFloat("_Split_Value", x),
                     10f,
                     fadeTime
-                ).SetEase(Ease.InCubic)
+                ).SetEase(Ease.InOutSine)
             );
         }
 
@@ -79,7 +79,7 @@ public class ObjectHandler : MonoBehaviour
             int index = i;
 
             // value init
-            list_material[index].SetFloat("_Split_Value", 10f);
+            list_material[index].SetFloat("_Split_Value", 3f); // none noise = 10f;
 
             // animation start
             sequence.Join(
@@ -88,7 +88,7 @@ public class ObjectHandler : MonoBehaviour
                     x => list_material[index].SetFloat("_Split_Value", x),
                     0f,
                     fadeTime
-                ).SetEase(Ease.InCubic)
+                ).SetEase(Ease.Flash)
             );
         }
 

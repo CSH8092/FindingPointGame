@@ -67,12 +67,6 @@ public class IObjectBerry : MonoBehaviour, IObject
         GameObject model = Instantiate(data);
         model.name = data.name;
 
-        // Set OutLine
-        for (int i = 0; i < model.transform.childCount; i++)
-        {
-            model.transform.GetChild(i).gameObject.AddComponent<Outline>();
-        }
-
         // Save Target Object
         Object_Target = model;
 

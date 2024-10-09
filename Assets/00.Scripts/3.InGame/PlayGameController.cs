@@ -47,6 +47,7 @@ public class PlayGameController : MonoBehaviour
     int count_AllNum = 3; // 30개로 일단 고정
     int count_AllWrong = 3; // 3개로 고정
 
+    bool flag_isFirstStart = true;
     bool flag_wait = false;
 
     private void Awake()
@@ -58,6 +59,8 @@ public class PlayGameController : MonoBehaviour
     {
         skyboxMaterial = RenderSettings.skybox;
         layerMask = LayerMask.GetMask("ButtonObject");
+
+        flag_isFirstStart = true;
 
         LoadData();
         StartStageGame();
@@ -89,7 +92,7 @@ public class PlayGameController : MonoBehaviour
                     Debug.LogFormat("Click {0} Button", raycastHit.transform.gameObject.name);
                     if (raycastHit.transform.name.Contains("_Left"))
                     {
-                        ClickFieldButton(false); // 버튼 누르면 반대 방향으로 움직여야 하므로 flag 반대
+                        ClickFieldButton(false);
                     }
                     else if (raycastHit.transform.name.Contains("_Right"))
                     {
@@ -133,8 +136,12 @@ public class PlayGameController : MonoBehaviour
 
         GameObject mesh_Target = meshes[currentStageIndex];
 
-        // Show Sample
-        Instantiate(mesh_Target, object_Answer.transform);
+        if (flag_isFirstStart)
+        {
+            // Show Sample
+            Instantiate(mesh_Target, object_Answer.transform);
+            flag_isFirstStart = false;
+        }
 
         // Create Object
         Factory.ObjectType type = (Factory.ObjectType)currentStageIndex; // Factory.ObjectType.pudding;
@@ -204,6 +211,8 @@ public class PlayGameController : MonoBehaviour
 
                 ButtonSet[] set = new ButtonSet[] { new ButtonSet("Ok", null) };
                 ModalManager.Instance.ShowModal("3", "10", set);
+
+                flag_wait = false;
             }
         }
     }
@@ -264,12 +273,11 @@ public class PlayGameController : MonoBehaviour
 
         ///PinController.DeleteAllPinObjects();
 
-        //yield return new WaitForSeconds(0.1f);
 
         target.SetActive(false);
         GameObject.Destroy(target);
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.15f);
 
         CreateStageObjects();
 

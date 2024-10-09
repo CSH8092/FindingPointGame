@@ -8,12 +8,11 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 2.Phase_PenBody
-  m_Shader: {fileID: -6465566751694194690, guid: 4fa60d9788a77884dbd6196ec22fe7ae, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: d69f36f06dd75f54a8efe6b6b3e5deea, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _TEST
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -66,6 +65,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Metallic_Map:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise_Map:
+        m_Texture: {fileID: 2800000, guid: f48d7f308540ace458496926a5cb0caf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal_Map:
@@ -121,7 +124,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Glow_Size: 0.2
+    - _Glow_Size: 0.15
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -144,7 +147,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Emission_Color: {r: 0, g: 0, b: 0, a: 0}
-    - _Glow_Color: {r: 0, g: 334.19702, b: 1024, a: 0}
+    - _Glow_Color: {r: 1367.1202, g: 1367.1202, b: 1367.1202, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &7766600333009072063

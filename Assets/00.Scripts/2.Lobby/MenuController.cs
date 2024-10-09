@@ -111,25 +111,6 @@ public class MenuController : MonoBehaviour
         }
     }
 
-    void CheckHoverEvent()
-    {
-        // menu Object OutLine Event
-        ray = component_cameraCom.camera_this.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out raycastHit, 100, layerMask))
-        {
-            if (raycastHit.transform.tag.Equals("Button"))
-            {
-                if (raycastHit.transform.TryGetComponent<Outline>(out Outline outline))
-                {
-                    if (!outline.enabled)
-                    {
-                        //outline.enabled = true;
-                    }
-                }
-            }
-        }
-    }
-
     void ClickGameStart()
     {
         Debug.LogFormat("<color=yellow>Click {0} Stage!</color>", selectStageNum);
@@ -202,11 +183,7 @@ public class MenuController : MonoBehaviour
                 menuCom.objectHandler = handler;
             }
 
-            // Setting OutLine & Material
-            for (int j = 0; j < model.transform.childCount; j++)
-            {
-                model.transform.GetChild(j).gameObject.AddComponent<Outline>();
-            }
+            // Setting Material
             //menuCom.SetMaterial(material_Hologram);
 
             list_MenuObjects.Add(menuCom);

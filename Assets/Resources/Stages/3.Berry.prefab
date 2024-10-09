@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 968136144473177936}
   - component: {fileID: 178354375689998292}
   - component: {fileID: 1644866584251399837}
-  - component: {fileID: 324439549460042334}
+  - component: {fileID: 6317248561567347850}
   m_Layer: 9
   m_Name: 3.Berry
   m_TagString: Button
@@ -55,6 +55,7 @@ MonoBehaviour:
   - {fileID: 1904399392525629702}
   - {fileID: 7136009817995494387}
   list_material: []
+  list_rendomMaterial: []
 --- !u!136 &1644866584251399837
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -78,23 +79,18 @@ CapsuleCollider:
   m_Height: 4
   m_Direction: 1
   m_Center: {x: 0, y: 1.7, z: 0}
---- !u!114 &324439549460042334
+--- !u!114 &6317248561567347850
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5584617545311706339}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Script: {fileID: 11500000, guid: b4c6495dd4bc1844a93dadabf109e673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!1001 &5977770755614340861
 PrefabInstance:
   m_ObjectHideFlags: 0

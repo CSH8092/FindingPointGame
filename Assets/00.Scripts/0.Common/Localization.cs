@@ -69,7 +69,7 @@ public class Localization : MonoBehaviour
     public static string GetStringByString(string target)
     {
 #if UNITY_EDITOR
-        curr_language = CurrentLanguage.ENGLISH; // test
+        curr_language = CurrentLanguage.KOREAN; // test
         if (table_Languages.Count == 0)
         {
             ReadLanguageTable();
@@ -109,7 +109,7 @@ public class Localization : MonoBehaviour
     public static string GetStringByKey(string key, string originString = "")
     {
 #if UNITY_EDITOR
-        curr_language = CurrentLanguage.ENGLISH; // test
+        curr_language = CurrentLanguage.KOREAN; // test
         if (table_Languages.Count == 0)
         {
             ReadLanguageTable();

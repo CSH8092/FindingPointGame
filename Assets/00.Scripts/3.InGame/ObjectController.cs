@@ -95,7 +95,7 @@ public class ObjectController : MonoBehaviour
         object_TargetObject.transform.DORotate(new Vector3(0, 0, 0), time_animation).SetEase(Ease.InOutQuad);
 
         // Set Target Object to Camera Com
-        component_cameraCom.transform.position = new Vector3(0, 0, -33f);
+        component_cameraCom.transform.position = new Vector3(0, 1, -33f);
         component_cameraCom.SetTargetObject(object_Target);
 
         isObservationMode = true;

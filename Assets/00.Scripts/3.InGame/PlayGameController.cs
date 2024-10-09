@@ -44,7 +44,7 @@ public class PlayGameController : MonoBehaviour
     int layerMask;
 
     // Game Controllers
-    int count_AllNum = 3; // 30개로 일단 고정
+    int count_AllNum = 20; // 20개로 일단 고정
     int count_AllWrong = 3; // 3개로 고정
 
     bool flag_isFirstStart = true;

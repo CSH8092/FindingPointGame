@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     public GameObject[] object_pass;
+    public RectTransform rect_panelCheckList;
 
     [Header("Slider")]
     public Slider slider_answer;
@@ -51,6 +53,24 @@ public class UIController : MonoBehaviour
         for(int i=0;i< object_pass.Length; i++)
         {
             object_pass[i].SetActive(false);
+        }
+
+        InitToggleCheck();
+
+        ShowHidePanelCheckList(true);
+    }
+
+    Vector2 panel_on = new Vector2(-300, -100);
+    Vector2 panel_off = new Vector2(150, -100);
+    void ShowHidePanelCheckList(bool isOn)
+    {
+        if (isOn)
+        {
+            rect_panelCheckList.DOAnchorPos(panel_on, 2f);
+        }
+        else
+        {
+            rect_panelCheckList.DOAnchorPos(panel_off, 2f);
         }
     }
 

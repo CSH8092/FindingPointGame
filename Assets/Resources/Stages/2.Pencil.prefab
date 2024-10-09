@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 5584617545311706339}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -143,13 +143,25 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d28e8dae94b89d04fbf5d48760bf21ef, type: 2}
+    - target: {fileID: -5364443388373345022, guid: 7c86843003f630c44aa28fe4f49f3ba5, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: -4106140047641934039, guid: 7c86843003f630c44aa28fe4f49f3ba5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0bbf1183e082e2b419e37c1fe1bd5643, type: 2}
+    - target: {fileID: -1928586304710879206, guid: 7c86843003f630c44aa28fe4f49f3ba5, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7c86843003f630c44aa28fe4f49f3ba5, type: 3}
       propertyPath: m_Name
       value: 2.Pencil
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7c86843003f630c44aa28fe4f49f3ba5, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1760370526743669582, guid: 7c86843003f630c44aa28fe4f49f3ba5, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -159,10 +171,22 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a16ba9b45d5ff55499c8ec8778890ddc, type: 2}
+    - target: {fileID: 3990470936254210753, guid: 7c86843003f630c44aa28fe4f49f3ba5, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279395430322837620, guid: 7c86843003f630c44aa28fe4f49f3ba5, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6425872861764527839, guid: 7c86843003f630c44aa28fe4f49f3ba5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2453114f32c92b045a2285581cb49242, type: 2}
+    - target: {fileID: 6641235337694300853, guid: 7c86843003f630c44aa28fe4f49f3ba5, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -57,6 +57,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: ad2201b42dd441542a0752b3e729a2f5, type: 2}
   - {fileID: 2100000, guid: dae237e4f9d0efe4d9afe225f1519351, type: 2}
   - {fileID: 2100000, guid: 64a16ff7dd4881e438cbd7e36a301da4, type: 2}
+  - {fileID: 2100000, guid: e4536bb1753359141a668304f994e0fe, type: 2}
 --- !u!136 &1644866584251399837
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -27,6 +27,7 @@ public class TitleController : MonoBehaviour
 
     void ClickExitButton()
     {
+        Debug.Log("Quit Game, Title");
         Application.Quit();
     }
 }

@@ -111,7 +111,8 @@ public class CameraCom : MonoBehaviour
         }
         if (canPan)
         {
-            CameraPan();
+            CameraPerfectPan();
+            //CameraPan();
         }
 
 #if false
@@ -275,9 +276,10 @@ public class CameraCom : MonoBehaviour
             // 충돌 판정이 됬을 때만 해당 -> map 같은 오브젝트 옮길 때 유용할듯?
             a = transform_camera.position;
             ray = camera_this.ScreenPointToRay(Input.mousePosition);
+
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.gameObject.layer == 7) // Layer 7 : Model
+                if (hit.transform.gameObject.layer == 9)
                 {
                     c = hit.point;
                     isPan = true;

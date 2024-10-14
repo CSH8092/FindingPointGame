@@ -10,12 +10,13 @@ public class UIController : MonoBehaviour
     public GameObject[] object_pass;
     public RectTransform rect_panelCheckList;
 
+    [Header("Button")]
+    public Button button_BackToLobby;
+    public Button button_QuitToGame;
+
     [Header("Slider")]
     public Slider slider_answer;
     public Slider slider_wrong;
-
-    [Header("Button")]
-    public Button button_BackToLobby;
 
     [Header("Toggle")]
     public Toggle[] toggle_list;
@@ -32,9 +33,16 @@ public class UIController : MonoBehaviour
     void Start()
     {
         button_BackToLobby.onClick.AddListener(() => BackToLobby());
+        button_QuitToGame.onClick.AddListener(() => QuitToGame());
 
         slider_answer.onValueChanged.AddListener(ChangeValue_A);
         slider_wrong.onValueChanged.AddListener(ChangeValue_W);
+
+        for (int i = 0; i < toggle_list.Length; i++)
+        {
+            int index = i;
+            toggle_list[i].onValueChanged.AddListener((x) => SetToggleUIState(index, x));
+        }
 
         SetStageMessage();
     }
@@ -60,8 +68,8 @@ public class UIController : MonoBehaviour
         ShowHidePanelCheckList(true);
     }
 
-    Vector2 panel_on = new Vector2(-300, -100);
-    Vector2 panel_off = new Vector2(150, -100);
+    Vector2 panel_on = new Vector2(-300, -60);
+    Vector2 panel_off = new Vector2(150, -60);
     void ShowHidePanelCheckList(bool isOn)
     {
         if (isOn)
@@ -71,6 +79,16 @@ public class UIController : MonoBehaviour
         else
         {
             rect_panelCheckList.DOAnchorPos(panel_off, 2f);
+        }
+    }
+
+    void SetToggleUIState(int toggleIndex, bool isOn)
+    {
+        Toggle target = toggle_list[toggleIndex];
+
+        if(target.TryGetComponent<UI_Toggle>(out UI_Toggle toggle))
+        {
+            toggle.SetOnOff(isOn);
         }
     }
 
@@ -167,6 +185,12 @@ public class UIController : MonoBehaviour
     void BackToLobby()
     {
         SceneLoader.Instance.LoadSceneByName("02.Lobby");
+    }
+
+    void QuitToGame()
+    {
+        Debug.Log("Quit Game, InGame");
+        Application.Quit();
     }
 
     void SetStageMessage()

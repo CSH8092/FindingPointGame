@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Outline : MonoBehaviour
 {
@@ -36,13 +37,16 @@ public class Outline : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (!SingletonCom.Instance.isObservationMode)
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            for(int i = 0; i < list_render.Count; i++)
+            if (!SingletonCom.Instance.isObservationMode)
             {
-                var materials = list_render[i].sharedMaterials.ToList();
-                materials.Add(material_outline);
-                list_render[i].materials = materials.ToArray();
+                for (int i = 0; i < list_render.Count; i++)
+                {
+                    var materials = list_render[i].sharedMaterials.ToList();
+                    materials.Add(material_outline);
+                    list_render[i].materials = materials.ToArray();
+                }
             }
         }
     }

@@ -34,6 +34,8 @@ public class MenuController : MonoBehaviour
     SingletonCom sc;
 
     [Header("Buttons")]
+    public Button button_BackToTitle;
+    public Button button_QuitToGame;
     public Button button_Left;
     public Button button_Right;
 
@@ -71,6 +73,9 @@ public class MenuController : MonoBehaviour
 
         button_Left.onClick.AddListener(() => ClickMenuChangeButton(false));
         button_Right.onClick.AddListener(() => ClickMenuChangeButton(true));
+
+        button_BackToTitle.onClick.AddListener(() => BackToTitle());
+        button_QuitToGame.onClick.AddListener(() => QuitToGame());
     }
 
     void Update()
@@ -109,6 +114,17 @@ public class MenuController : MonoBehaviour
                 }
             }
         }
+    }
+
+    void BackToTitle()
+    {
+        SceneLoader.Instance.LoadSceneByName("01.Title");
+    }
+
+    void QuitToGame()
+    {
+        Debug.Log("Quit Game, Lobby");
+        Application.Quit();
     }
 
     void ClickGameStart()

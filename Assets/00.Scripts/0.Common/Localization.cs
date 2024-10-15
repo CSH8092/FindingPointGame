@@ -2,12 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 
 public class Localization : MonoBehaviour
 {
     static Dictionary<string, LanguageString> table_Languages = new Dictionary<string, LanguageString>();
-    public static CurrentLanguage curr_language;
+
+    public List<SET_LOCALIZATION_STRING> list_localization = new List<SET_LOCALIZATION_STRING>();
+
+    [Serializable]
+    public struct SET_LOCALIZATION_STRING
+    {
+        public TextMeshProUGUI text_target;
+        public string key;
+    }
 
     class LanguageString
     {
@@ -23,17 +32,28 @@ public class Localization : MonoBehaviour
 
     private void Awake()
     {
-        curr_language = CurrentLanguage.ENGLISH;
+        if(table_Languages.Count == 0)
+        {
+            ReadLanguageTable();
+        }
     }
 
     void Start()
     {
-        ReadLanguageTable();
+        SetTranslate();
     }
 
     void Update()
     {
 
+    }
+
+    public void SetTranslate()
+    {
+        for(int i = 0; i < list_localization.Count; i++)
+        {
+            list_localization[i].text_target.text = GetStringByKey(list_localization[i].key, list_localization[i].text_target.text);
+        }
     }
 
     static void ReadLanguageTable()
@@ -43,6 +63,8 @@ public class Localization : MonoBehaviour
 
         if(csvFile != null)
         {
+            Debug.LogFormat("<color=green>Read CSV File!</color>");
+
             string str = csvFile.text;
             table_Languages = ReadCSVFile(str);
         }
@@ -68,14 +90,6 @@ public class Localization : MonoBehaviour
 
     public static string GetStringByString(string target)
     {
-#if UNITY_EDITOR
-        curr_language = CurrentLanguage.KOREAN; // test
-        if (table_Languages.Count == 0)
-        {
-            ReadLanguageTable();
-        }
-#endif
-
         string result = target;
         LanguageString value;
 
@@ -86,7 +100,7 @@ public class Localization : MonoBehaviour
                 string key = entry.Key;
                 if (table_Languages.TryGetValue(key, out value))
                 {
-                    switch (curr_language)
+                    switch (SingletonCom.curr_language)
                     {
                         case CurrentLanguage.ENGLISH:
                             result = value.language_en;
@@ -108,21 +122,13 @@ public class Localization : MonoBehaviour
 
     public static string GetStringByKey(string key, string originString = "")
     {
-#if UNITY_EDITOR
-        curr_language = CurrentLanguage.KOREAN; // test
-        if (table_Languages.Count == 0)
-        {
-            ReadLanguageTable();
-        }
-#endif
-
         string result = originString;
         LanguageString value;
 
         if (table_Languages.TryGetValue(key, out value))
         {
             // core °øÅë table search
-            switch (curr_language)
+            switch (SingletonCom.curr_language)
             {
                 case CurrentLanguage.ENGLISH:
                     result = value.language_en;

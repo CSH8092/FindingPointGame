@@ -18,7 +18,7 @@ public class UI_Modal : MonoBehaviour
     [Header("Components")]
     public Image image_background;
     public TextMeshProUGUI text_Title;
-    public TextMeshProUGUI text_Content;
+    public TextMeshProUGUI[] text_Content;
 
     [Header("Components_Options")]
     public Image image_icon;
@@ -53,7 +53,10 @@ public class UI_Modal : MonoBehaviour
         }
         if (text_Content != null)
         {
-            text_Content.color = setTextContent;
+            for(int i = 0; i < text_Content.Length; i++)
+            {
+                text_Content[i].color = setTextContent;
+            }
         }
         if (outline != null)
         {

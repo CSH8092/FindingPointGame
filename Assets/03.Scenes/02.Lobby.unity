@@ -14132,6 +14132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 673548179}
   - component: {fileID: 673548181}
+  - component: {fileID: 673548182}
   m_Layer: 0
   m_Name: Manager_Lobby
   m_TagString: Untagged
@@ -14183,6 +14184,23 @@ MonoBehaviour:
   button_Right: {fileID: 1805260564}
   text_selectStage: {fileID: 876706561}
   text_selectStagebyUI: {fileID: 1301948499}
+--- !u!114 &673548182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673548178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c8621ad610f6f4c95a358505593d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list_localization:
+  - text_target: {fileID: 1757391381}
+    key: 40
+  - text_target: {fileID: 1820276397}
+    key: 41
 --- !u!1 &723525129
 GameObject:
   m_ObjectHideFlags: 0
@@ -14728,13 +14746,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.65
+  m_fontSize: 30.7
   m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 15
-  m_fontSizeMax: 40
-  m_fontStyle: 1
+  m_fontSizeMax: 36
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -16125,8 +16143,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: BACK TO TITLE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 87bd71127d306344eb0a3e64d430305b, type: 2}
+  m_sharedMaterial: {fileID: 8454044102355284053, guid: 87bd71127d306344eb0a3e64d430305b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -16150,8 +16168,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
-  m_fontSizeBase: 16
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -16465,8 +16483,8 @@ MonoBehaviour:
 
     GAME'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 87bd71127d306344eb0a3e64d430305b, type: 2}
+  m_sharedMaterial: {fileID: 8454044102355284053, guid: 87bd71127d306344eb0a3e64d430305b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -16490,8 +16508,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
-  m_fontSizeBase: 16
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

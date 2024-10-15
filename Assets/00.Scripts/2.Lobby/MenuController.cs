@@ -259,7 +259,8 @@ public class MenuController : MonoBehaviour
         selectStageNum = stageNum;
         string stageName = object_ParentMenu.transform.GetChild(selectStageNum).name;
         string[] split = stageName.Split('.');
-        text_selectStage.text = split[1];
+
+        text_selectStage.text = Localization.GetStringByString(split[1]);
         //text_selectStagebyUI.text = stageName;
 
         if (material_Screen != null)

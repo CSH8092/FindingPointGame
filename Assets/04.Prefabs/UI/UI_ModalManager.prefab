@@ -602,7 +602,8 @@ MonoBehaviour:
   colorType: 0
   image_background: {fileID: 8512561870936044402}
   text_Title: {fileID: 7665382752659525592}
-  text_Content: {fileID: 5960045278498806408}
+  text_Content:
+  - {fileID: 5960045278498806408}
   image_icon: {fileID: 0}
   outline: {fileID: 2392209208445958250}
 --- !u!1 &4952427630148576474

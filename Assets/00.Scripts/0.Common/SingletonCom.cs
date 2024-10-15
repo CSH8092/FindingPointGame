@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Localization;
 
 public class SingletonCom
 {
+    // Setting Value
+    public static CurrentLanguage curr_language;
+    public static ConstString.UIThemeType curr_theme;
+
+    // Game Value
     public List<PinPoint> list_PinPoints = new List<PinPoint>();
 
     public bool isMenuArrange = false;

@@ -32,3 +32,20 @@ key,val1,val2
 30,berry3,베리3
 31,berry4,베리4
 32,berry5,베리5
+33,Setting,설정
+34,LANGUAGE,언어
+35,UI THEME,UI 테마
+36,KOREAN,한국어
+37,ENGLISH,영어
+38,DARK MODE,어두운 색상
+39,LIGHT MODE,밝은 색상
+40,BACK TO TITLE,타이틀로 돌아가기
+41,QUIT GAME,게임 나가기
+42,BACK TO LOBBY,로비로 돌아가기
+43,Close,닫기
+44,Press [Q] OR Click This To Quit,종료하려면 [Q]를 누르거나 클릭하세요
+45,Ok,확인
+46,Pudding,푸딩
+47,Donut,도넛
+48,Pencil,연필
+49,Berry,베리

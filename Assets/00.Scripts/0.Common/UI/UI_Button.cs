@@ -5,38 +5,82 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, ISelectHandler, IDeselectHandler, IPointerClickHandler
+public class UI_Button : MonoBehaviour, ITheme, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, ISelectHandler, IDeselectHandler, IPointerClickHandler
 {
     public enum ColorType
     {
-        CyanDarkToggle
+        Dark_CyanButton,
+        Light_CyanButton
     }
 
     [Header("Select Type")]
     public ColorType colorType;
 
     [Header("Components")]
-    public Toggle toggle;
-    public Image image_toggle;
-    public Image image_toggleOn;
+    public Button button;
+    public Image image_background;
 
     [Header("Components_Options")]
-    public TextMeshProUGUI toggleText;
+    public TextMeshProUGUI buttonText;
     public Image image_icon;
     public UnityEngine.UI.Outline outline;
 
     [Header("Colors")]
     Color setButtonColor;
-    Color setButtonOnColor;
     Color setOutLineColor;
     Color setContentColorText;
     Color setContentColorIcon;
 
     bool isSelected = false;
 
+    void OnEnable()
+    {
+        SetDefaultColor();
+    }
+
+    private void Awake()
+    {
+        RememberThis();
+    }
+
+    private void Start()
+    {
+        UpdateTheme();
+    }
+
+    public void UpdateTheme()
+    {
+        switch (SingletonCom.curr_theme)
+        {
+            case ConstString.UIThemeType.theme_dark:
+                colorType = ColorType.Dark_CyanButton;
+                break;
+            case ConstString.UIThemeType.theme_light:
+                colorType = ColorType.Light_CyanButton;
+                break;
+            default:
+                colorType = ColorType.Dark_CyanButton;
+                break;
+        }
+
+        if (isSelected)
+        {
+            SetSelectColor();
+        }
+        else
+        {
+            SetDefaultColor();
+        }
+    }
+
+    public void RememberThis()
+    {
+        IThemeController.Instance.list_UIComponents.Add(this);
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (toggle.interactable)
+        if (button.interactable)
         {
             SetClickColor();
         }
@@ -44,7 +88,7 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (!isSelected && toggle.interactable)
+        if (!isSelected && button.interactable)
         {
             SetDefaultColor();
         }
@@ -52,7 +96,7 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!isSelected && toggle.interactable)
+        if (!isSelected && button.interactable)
         {
             SetHoverColor();
         }
@@ -60,7 +104,7 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (toggle.interactable)
+        if (button.interactable)
         {
             SetHoverColor();
         }
@@ -68,7 +112,7 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (toggle.interactable)
+        if (button.interactable)
         {
             if (isSelected)
             {
@@ -83,7 +127,7 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnSelect(BaseEventData eventData)
     {
-        if (toggle.interactable)
+        if (button.interactable)
         {
             SetSelectColor();
         }
@@ -91,7 +135,7 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnDeselect(BaseEventData eventData)
     {
-        if (toggle.interactable)
+        if (button.interactable)
         {
             SetDefaultColor();
         }
@@ -99,7 +143,7 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void SetInteractable(bool isOn)
     {
-        toggle.interactable = isOn;
+        button.interactable = isOn;
 
         if (isOn)
         {
@@ -109,16 +153,6 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         {
             SetDisableColor();
         }
-    }
-
-    private void Awake()
-    {
-        if (isSelected)
-        {
-            return;
-        }
-
-        SetDefaultColor();
     }
 
     public void SetOnOff(bool isOn)
@@ -135,18 +169,13 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     void SetUI()
     {
-        if (image_toggle != null)
+        if (image_background != null)
         {
-            image_toggle.color = setButtonColor;
+            image_background.color = setButtonColor;
         }
-        if (image_toggleOn != null)
+        if (buttonText != null)
         {
-            image_toggleOn.color = setButtonOnColor;
-        }
-
-        if (toggleText != null)
-        {
-            toggleText.color = setContentColorText;
+            buttonText.color = setContentColorText;
         }
         if (outline != null)
         {
@@ -166,7 +195,7 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     void SetDefaultColor()
     {
-        if (!toggle.interactable)
+        if (!button.interactable)
         {
             SetDisableColor();
             return;
@@ -176,10 +205,15 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         switch (colorType)
         {
-            case ColorType.CyanDarkToggle:
+            case ColorType.Dark_CyanButton:
                 setButtonColor = UI_Color.black;
-                setButtonOnColor = UI_Color.cyan;
                 setContentColorText = UI_Color.white_150;
+                setOutLineColor = UI_Color.cyan;
+                setContentColorIcon = UI_Color.none;
+                break;
+            case ColorType.Light_CyanButton:
+                setButtonColor = UI_Color.white;
+                setContentColorText = UI_Color.black_150;
                 setOutLineColor = UI_Color.cyan;
                 setContentColorIcon = UI_Color.none;
                 break;
@@ -194,10 +228,15 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         switch (colorType)
         {
-            case ColorType.CyanDarkToggle:
+            case ColorType.Dark_CyanButton:
                 setButtonColor = UI_Color.black;
-                setButtonOnColor = UI_Color.cyan;
                 setContentColorText = UI_Color.white;
+                setOutLineColor = UI_Color.cyan;
+                setContentColorIcon = UI_Color.cyan_50;
+                break;
+            case ColorType.Light_CyanButton:
+                setButtonColor = UI_Color.white;
+                setContentColorText = UI_Color.black;
                 setOutLineColor = UI_Color.cyan;
                 setContentColorIcon = UI_Color.cyan_50;
                 break;
@@ -212,10 +251,15 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         switch (colorType)
         {
-            case ColorType.CyanDarkToggle:
+            case ColorType.Dark_CyanButton:
                 setButtonColor = UI_Color.black;
-                setButtonOnColor = UI_Color.cyan;
                 setContentColorText = UI_Color.white_200;
+                setOutLineColor = UI_Color.cyan;
+                setContentColorIcon = UI_Color.cyan;
+                break;
+            case ColorType.Light_CyanButton:
+                setButtonColor = UI_Color.white;
+                setContentColorText = UI_Color.black_200;
                 setOutLineColor = UI_Color.cyan;
                 setContentColorIcon = UI_Color.cyan;
                 break;
@@ -232,10 +276,15 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         switch (colorType)
         {
-            case ColorType.CyanDarkToggle:
+            case ColorType.Dark_CyanButton:
                 setButtonColor = UI_Color.black;
-                setButtonOnColor = UI_Color.cyan;
                 setContentColorText = UI_Color.white_200;
+                setOutLineColor = UI_Color.cyan;
+                setContentColorIcon = UI_Color.cyan;
+                break;
+            case ColorType.Light_CyanButton:
+                setButtonColor = UI_Color.white;
+                setContentColorText = UI_Color.black_200;
                 setOutLineColor = UI_Color.cyan;
                 setContentColorIcon = UI_Color.cyan;
                 break;
@@ -250,10 +299,15 @@ public class UI_Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         switch (colorType)
         {
-            case ColorType.CyanDarkToggle:
+            case ColorType.Dark_CyanButton:
                 setButtonColor = UI_Color.black;
-                setButtonOnColor = UI_Color.cyan_50;
                 setContentColorText = UI_Color.white_150;
+                setOutLineColor = UI_Color.cyan_50;
+                setContentColorIcon = UI_Color.cyan_50;
+                break;
+            case ColorType.Light_CyanButton:
+                setButtonColor = UI_Color.white;
+                setContentColorText = UI_Color.black_150;
                 setOutLineColor = UI_Color.cyan_50;
                 setContentColorIcon = UI_Color.cyan_50;
                 break;

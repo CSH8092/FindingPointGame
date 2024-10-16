@@ -5,11 +5,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using static ModalManager;
 
-public class UI_Modal : MonoBehaviour
+public class UI_Modal : MonoBehaviour, ITheme
 {
     public enum ColorType
     {
-        CyanDarkModal
+        Dark_CyanModal,
+        Light_CyanModal
     }
 
     [Header("Select Type")]
@@ -33,12 +34,32 @@ public class UI_Modal : MonoBehaviour
 
     void Start()
     {
+        RememberThis();
+
+        UpdateTheme();
+    }
+
+    public void UpdateTheme()
+    {
+        switch (SingletonCom.curr_theme)
+        {
+            case ConstString.UIThemeType.theme_dark:
+                colorType = ColorType.Dark_CyanModal;
+                break;
+            case ConstString.UIThemeType.theme_light:
+                colorType = ColorType.Light_CyanModal;
+                break;
+            default:
+                colorType = ColorType.Dark_CyanModal;
+                break;
+        }
+
         SetDefaultColor();
     }
 
-    void Update()
+    public void RememberThis()
     {
-        
+        IThemeController.Instance.list_UIComponents.Add(this);
     }
 
     void SetUI()
@@ -68,15 +89,21 @@ public class UI_Modal : MonoBehaviour
         }
     }
 
-
     void SetDefaultColor()
     {
         switch (colorType)
         {
-            case ColorType.CyanDarkModal:
+            case ColorType.Dark_CyanModal:
                 setModalColor = UI_Color.black;
                 setTextTitle = UI_Color.cyan;
                 setTextContent = UI_Color.white;
+                setOutLineColor = UI_Color.cyan;
+                setContentColorIcon = UI_Color.none;
+                break;
+            case ColorType.Light_CyanModal:
+                setModalColor = UI_Color.white;
+                setTextTitle = UI_Color.cyan;
+                setTextContent = UI_Color.black;
                 setOutLineColor = UI_Color.cyan;
                 setContentColorIcon = UI_Color.none;
                 break;

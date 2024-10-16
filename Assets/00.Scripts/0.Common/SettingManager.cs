@@ -88,7 +88,10 @@ public class SettingManager : MonoBehaviour
     void LoadSetting()
     {
         int value_language = PlayerPrefs.GetInt(key_language);
-        if(value_language == 0)
+        int value_theme = PlayerPrefs.GetInt(key_theme);
+        Debug.LogFormat("{0} {1} Setting Loaded.", value_language, value_theme);
+
+        if (value_language == 0)
         {
             toggle_en.isOn = true;
         }
@@ -97,7 +100,6 @@ public class SettingManager : MonoBehaviour
             toggle_kr.isOn = true;
         }
 
-        int value_theme = PlayerPrefs.GetInt(key_theme);
         if (value_theme == 0)
         {
             toggle_dark.isOn = true;
@@ -106,8 +108,6 @@ public class SettingManager : MonoBehaviour
         {
             toggle_light.isOn = true;
         }
-
-        Debug.LogFormat("{0} {1} Setting Loaded.", value_language, value_theme);
     }
 
     public void ShowHideSettingModal(bool isOn)
@@ -120,6 +120,17 @@ public class SettingManager : MonoBehaviour
         for(int i=0;i< list_targetLocalClass.Length; i++)
         {
             list_targetLocalClass[i].SetTranslate();
+        }
+    }
+
+    void UpdateTheme()
+    {
+        if (IThemeController.Instance.list_UIComponents != null)
+        {
+            for(int i=0;i< IThemeController.Instance.list_UIComponents.Count; i++)
+            {
+                IThemeController.Instance.list_UIComponents[i].UpdateTheme();
+            }
         }
     }
 
@@ -162,6 +173,8 @@ public class SettingManager : MonoBehaviour
             SingletonCom.curr_theme = ConstString.UIThemeType.theme_dark;
             uiToggle_dark.SetOnOff(true);
             SaveSettingTheme();
+
+            UpdateTheme();
         }
         else
         {
@@ -176,6 +189,8 @@ public class SettingManager : MonoBehaviour
             SingletonCom.curr_theme = ConstString.UIThemeType.theme_light;
             uiToggle_light.SetOnOff(true);
             SaveSettingTheme();
+
+            UpdateTheme();
         }
         else
         {

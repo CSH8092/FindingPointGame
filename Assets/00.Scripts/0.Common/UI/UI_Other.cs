@@ -49,6 +49,11 @@ public class UI_Other : MonoBehaviour, ITheme
         IThemeController.Instance.list_UIComponents.Add(this);
     }
 
+    public void RemoveThis()
+    {
+        IThemeController.Instance.list_UIComponents.Remove(this);
+    }
+
     private void Start()
     {
         RememberThis();
@@ -59,6 +64,11 @@ public class UI_Other : MonoBehaviour, ITheme
     void Update()
     {
         
+    }
+
+    private void OnDestroy()
+    {
+        RemoveThis();
     }
 
     void SetUI()

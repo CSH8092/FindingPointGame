@@ -7,4 +7,5 @@ public interface ITheme
     void UpdateTheme();
 
     public void RememberThis();
+    public void RemoveThis();
 }

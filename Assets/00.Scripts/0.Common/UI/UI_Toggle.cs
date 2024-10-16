@@ -45,6 +45,11 @@ public class UI_Toggle : MonoBehaviour, ITheme, IPointerEnterHandler, IPointerEx
         UpdateTheme();
     }
 
+    private void OnDestroy()
+    {
+        RemoveThis();
+    }
+
     public void UpdateTheme()
     {
         switch (SingletonCom.curr_theme)
@@ -73,6 +78,11 @@ public class UI_Toggle : MonoBehaviour, ITheme, IPointerEnterHandler, IPointerEx
     public void RememberThis()
     {
         IThemeController.Instance.list_UIComponents.Add(this);
+    }
+
+    public void RemoveThis()
+    {
+        IThemeController.Instance.list_UIComponents.Remove(this);
     }
 
     public void OnPointerDown(PointerEventData eventData)

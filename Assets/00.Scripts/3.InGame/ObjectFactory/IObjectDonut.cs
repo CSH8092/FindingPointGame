@@ -11,7 +11,7 @@ public class IObjectDonut : MonoBehaviour, IObject
     public IObjectDonut(GameObject data)
     {
         SetMeshData(data);
-        SetRandomPoint(10);
+        SetRandomPoint(20);
     }
 
     void SetRandomPoint(int percent)
@@ -21,10 +21,9 @@ public class IObjectDonut : MonoBehaviour, IObject
         Random rand = new Random();
         for (int i = 0; i < array_diffPoint.Length; i++)
         {
-            // 0 ~ 99 사이의 무작위 숫자를 생성하고 10 미만일 경우 1로 설정
+            // 0 ~ 99 사이의 무작위 숫자를 생성하고 percent 미만일 경우 1로 설정
             if (rand.Next(100) < percent)
             {
-                array_diffPoint[i] = 1;
                 MakeDiffPoint(i);
             }
         }
@@ -32,6 +31,7 @@ public class IObjectDonut : MonoBehaviour, IObject
         Debug.LogFormat("Set {0} {1} {2} {3} {4}", array_diffPoint[0], array_diffPoint[1], array_diffPoint[2], array_diffPoint[3], array_diffPoint[4]);
     }
 
+    bool flag_donut = false;
     void MakeDiffPoint(int caseNum)
     {
         switch (caseNum)
@@ -39,9 +39,16 @@ public class IObjectDonut : MonoBehaviour, IObject
             case 0:
                 // 도넛 크림 숨겨짐
                 ObjectHandler.object_Parts[1].SetActive(false);
+
+                flag_donut = true;
                 break;
             case 1:
                 // 도넛 크림 회전
+                if (flag_donut)
+                {
+                    return;
+                }
+
                 ObjectHandler.object_Parts[1].transform.localRotation = Quaternion.Euler(-90, 0, 180);
                 break;
             case 2:
@@ -59,6 +66,8 @@ public class IObjectDonut : MonoBehaviour, IObject
             default:
                 break;
         }
+
+        array_diffPoint[caseNum] = 1;
     }
 
     void SetMeshData(GameObject data)

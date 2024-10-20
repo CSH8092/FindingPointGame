@@ -324,14 +324,14 @@ public class UI_Toggle : MonoBehaviour, ITheme, IPointerEnterHandler, IPointerEx
                 setButtonOnColor = UI_Color.cyan_50;
                 setContentColorText = UI_Color.white_150;
                 setOutLineColor = UI_Color.cyan_50;
-                setContentColorIcon = UI_Color.cyan_50;
+                setContentColorIcon = UI_Color.none;
                 break;
             case ColorType.Light_CyanToggle:
                 setButtonColor = UI_Color.white;
                 setButtonOnColor = UI_Color.cyan_50;
                 setContentColorText = UI_Color.black_150;
                 setOutLineColor = UI_Color.cyan_50;
-                setContentColorIcon = UI_Color.cyan_50;
+                setContentColorIcon = UI_Color.none;
                 break;
             default:
                 break;

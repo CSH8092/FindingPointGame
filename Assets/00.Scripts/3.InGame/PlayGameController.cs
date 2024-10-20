@@ -62,6 +62,7 @@ public class PlayGameController : MonoBehaviour
 
         flag_isFirstStart = true;
 
+        component_uiController.InitUI(count_AllNum, count_AllWrong);
         LoadData();
         StartStageGame();
     }
@@ -118,7 +119,6 @@ public class PlayGameController : MonoBehaviour
     void SettingStartObjects()
     {
         // Setting UI
-        component_uiController.InitUI(count_AllNum, count_AllWrong);
         CreateStageObjects();
     }
 
@@ -176,6 +176,8 @@ public class PlayGameController : MonoBehaviour
 
         if (isRight)
         {
+            component_uiController.CheckNoProblemState();
+
             Sequence sequence = DOTween.Sequence();
             sequence.Append(object_RightButton.transform.DOLocalMoveY(0.26f, 0.2f).SetEase(Ease.InSine));
             sequence.Append(object_RightButton.transform.DOLocalMoveY(0.42f, 0.2f).SetEase(Ease.InSine));

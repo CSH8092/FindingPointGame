@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -19,12 +20,11 @@ public class UIController : MonoBehaviour
     public Slider slider_wrong;
 
     [Header("Toggle")]
-    public Toggle[] toggle_list;
+    public UI_Toggle[] toggle_list;
 
     [Header("Text")]
     public TextMeshProUGUI text_sliderCount;
     public TextMeshProUGUI text_sliderWrong;
-    public TextMeshProUGUI[] text_list;
 
     // Values
     int count_MaxA;
@@ -41,8 +41,9 @@ public class UIController : MonoBehaviour
         for (int i = 0; i < toggle_list.Length; i++)
         {
             int index = i;
-            toggle_list[i].onValueChanged.AddListener((x) => SetToggleUIState(index, x));
+            toggle_list[i].toggle.onValueChanged.AddListener((x) => SetToggleUIState(index, x));
         }
+        toggle_list[0].toggle.onValueChanged.AddListener((x) => CheckNoProblemToggle(x));
 
         SetStageMessage();
     }
@@ -82,9 +83,21 @@ public class UIController : MonoBehaviour
         }
     }
 
+    void CheckNoProblemToggle(bool isOn)
+    {
+        Toggle target;
+        for (int i = 1; i < toggle_list.Length; i++)
+        {
+            target = toggle_list[i].toggle;
+            target.isOn = false;
+
+            toggle_list[i].SetInteractable(!isOn);
+        }
+    }
+
     void SetToggleUIState(int toggleIndex, bool isOn)
     {
-        Toggle target = toggle_list[toggleIndex];
+        Toggle target = toggle_list[toggleIndex].toggle;
 
         if(target.TryGetComponent<UI_Toggle>(out UI_Toggle toggle))
         {
@@ -96,18 +109,38 @@ public class UIController : MonoBehaviour
     {
         for (int i = 0; i < toggle_list.Length; i++)
         {
-            toggle_list[i].isOn = false;
+            toggle_list[i].toggle.isOn = false;
         }
     }
 
     public int[] GetToggleCheck()
     {
-        int[] list_toggleCheck = new int[5];
-        for (int i = 0; i < toggle_list.Length; i++)
+        // Index 0 : No Problem
+        int[] list_toggleCheck = new int[toggle_list.Length - 1];
+
+        for (int i = 1; i < toggle_list.Length; i++)
         {
-            list_toggleCheck[i] = toggle_list[i].isOn ? 1 : 0;
+            list_toggleCheck[i - 1] = toggle_list[i].toggle.isOn ? 1 : 0;
         }
         return list_toggleCheck;
+    }
+
+    public void CheckNoProblemState()
+    {
+        bool result = true;
+        for (int i = 0; i < toggle_list.Length; i++)
+        {
+            if (toggle_list[i].toggle.isOn)
+            {
+                result = false;
+            }
+        }
+
+        if (result)
+        {
+            // 사용자가 아무것도 체크하지 않고, 제출 버튼 누른 상태
+            toggle_list[0].toggle.isOn = true;
+        }
     }
 
     public bool AddCountPass()
@@ -217,10 +250,13 @@ public class UIController : MonoBehaviour
         }
 
         string string_read = "";
-        for (int i = 0; i < text_list.Length; i++)
+        string_read = Localization.GetStringByKey(50.ToString(), "No problem");
+        toggle_list[0].toggleText.text = string_read;
+
+        for (int i = 1; i < toggle_list.Length; i++)
         {
             string_read = Localization.GetStringByKey(stringkey.ToString(),"[error]");
-            text_list[i].text = string_read;
+            toggle_list[i].toggleText.text = string_read;
             stringkey++;
         }
     }

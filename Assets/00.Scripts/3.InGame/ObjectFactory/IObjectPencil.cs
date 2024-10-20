@@ -21,10 +21,9 @@ public class IObjectPencil : MonoBehaviour, IObject
         Random rand = new Random();
         for (int i = 0; i < array_diffPoint.Length; i++)
         {
-            // 0 ~ 99 사이의 무작위 숫자를 생성하고 10 미만일 경우 1로 설정
+            // 0 ~ 99 사이의 무작위 숫자를 생성하고 percent 미만일 경우 1로 설정
             if (rand.Next(100) < percent)
             {
-                array_diffPoint[i] = 1;
                 MakeDiffPoint(i);
             }
         }
@@ -59,6 +58,8 @@ public class IObjectPencil : MonoBehaviour, IObject
             default:
                 break;
         }
+
+        array_diffPoint[caseNum] = 1;
     }
 
     void SetMeshData(GameObject data)

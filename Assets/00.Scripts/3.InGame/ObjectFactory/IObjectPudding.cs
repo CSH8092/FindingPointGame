@@ -11,7 +11,7 @@ public class IObjectPudding : MonoBehaviour, IObject
     public IObjectPudding(GameObject data)
     {
         SetMeshData(data); 
-        SetRandomPoint(10);
+        SetRandomPoint(20); // 20%
     }
 
     void SetRandomPoint(int percent)
@@ -21,10 +21,9 @@ public class IObjectPudding : MonoBehaviour, IObject
         Random rand = new Random();
         for (int i = 0; i < array_diffPoint.Length; i++)
         {
-            // 0 ~ 99 사이의 무작위 숫자를 생성하고 10 미만일 경우 1로 설정
+            // 0 ~ 99 사이의 무작위 숫자를 생성하고 percent 미만일 경우 1로 설정
             if (rand.Next(100) < percent)
             {
-                array_diffPoint[i] = 1;
                 MakeDiffPoint(i);
             }
         }
@@ -32,6 +31,7 @@ public class IObjectPudding : MonoBehaviour, IObject
         //Debug.LogFormat("Set {0} {1} {2} {3} {4}", array_diffPoint[0], array_diffPoint[1], array_diffPoint[2], array_diffPoint[3], array_diffPoint[4]);
     }
 
+    bool flag_cherry = false;
     void MakeDiffPoint(int caseNum)
     {
         switch (caseNum)
@@ -39,9 +39,18 @@ public class IObjectPudding : MonoBehaviour, IObject
             case 0:
                 // 체리 숨겨짐
                 ObjectHandler.object_Parts[0].SetActive(false);
+
+                flag_cherry = true;
+                Debug.LogError("1");
                 break;
             case 1:
                 // 체리 회전
+                if (flag_cherry)
+                {
+                    Debug.LogError("2");
+                    return;
+                }
+
                 ObjectHandler.object_Parts[0].transform.localRotation = Quaternion.Euler(-90, 0, 180);
                 break;
             case 2:
@@ -59,6 +68,8 @@ public class IObjectPudding : MonoBehaviour, IObject
             default:
                 break;
         }
+
+        array_diffPoint[caseNum] = 1;
     }
 
     void SetMeshData(GameObject data)
